@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI社員オフィス（サンプル）｜稼働状況ダッシュボード</title>
+<meta name="description" content="制作テスト用のサンプルです。実在の事業・社員・実績ではありません。AI社員の稼働状況を模したダッシュボードのデモ画面です。">
+<meta property="og:title" content="AI社員オフィス（サンプル）｜稼働状況ダッシュボード">
+<meta property="og:description" content="制作テスト用のサンプルです。実在の事業・社員・実績ではありません。">
+<style>
+  /* ==================================================
+     全体リセット・基本設定
+     ================================================== */
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #1b1f27;
+    color: #e8e8ea;
+    font-family: "Yu Gothic", "Meiryo", "Hiragino Kaku Gothic ProN", sans-serif;
+  }
+
+  /* ==================================================
+     社訓の垂れ幕バナー
+     ================================================== */
+  .motto-banner {
+    background: repeating-linear-gradient(
+      135deg,
+      #7a1414,
+      #7a1414 18px,
+      #931a1a 18px,
+      #931a1a 36px
+    );
+    border-bottom: 4px solid #ffd54a;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    padding: 10px 12px;
+  }
+  .motto-banner__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 24px;
+  }
+  .motto-banner__item {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0.05em;
+    text-shadow: 0 2px 3px rgba(0,0,0,0.6);
+    white-space: nowrap;
+  }
+  .motto-banner__item::before { content: "「"; }
+  .motto-banner__item::after { content: "」"; }
+
+  /* ==================================================
+     ヘッダー（タイトル・注意書き）
+     ================================================== */
+  .site-header {
+    padding: 14px 16px 6px;
+    text-align: center;
+  }
+  .site-header h1 {
+    margin: 0 0 4px;
+    font-size: 1.3rem;
+  }
+  .site-header p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #9aa0ac;
+  }
+
+  /* file://で開いた場合、および fetch失敗時の警告表示 */
+  .notice-banner {
+    display: none;
+    max-width: 900px;
+    margin: 10px auto;
+    padding: 12px 16px;
+    background: #4a1414;
+    border: 2px solid #ff6b6b;
+    border-radius: 8px;
+    color: #ffe3e3;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .notice-banner.is-visible { display: block; }
+  .notice-banner strong { color: #ff9a9a; }
+
+  /* 情報用（エラーではない）バナー：file://で埋め込みデータ表示中の案内など */
+  .notice-banner--info {
+    background: #14304a;
+    border-color: #3d8bff;
+    color: #d6e6ff;
+  }
+  .notice-banner--info strong { color: #8fb8ff; }
+
+  /* ==================================================
+     メインレイアウト（オフィス俯瞰 + 作業ログ）
+     ================================================== */
+  .main-layout {
+    max-width: 1300px;
+    margin: 16px auto;
+    padding: 0 12px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 960px) {
+    .main-layout {
+      grid-template-columns: 2.2fr 1fr;
+    }
+  }
+
+  .panel {
+    background: #232833;
+    border: 1px solid #343b48;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .panel__title {
+    background: #2c3342;
+    padding: 8px 14px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-bottom: 1px solid #3a4152;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .panel__title .updated-at {
+    font-weight: 400;
+    font-size: 0.75rem;
+    color: #9aa0ac;
+  }
+
+  /* 常時表示のサンプル表記バー（スクロールしても画面上部に残す） */
+  .sample-bar {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background: #14304a;
+    border-bottom: 2px solid #3d8bff;
+    color: #eaf2ff;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    font-weight: 700;
+    text-align: center;
+    padding: 10px 14px;
+  }
+
+  /* パネル内の注記（本文と同等の視認性を確保する） */
+  .panel-note {
+    margin: 0;
+    padding: 10px 14px;
+    background: #2a3140;
+    border-bottom: 1px solid #343b48;
+    color: #e8e8ea;
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  /* --------------------------------------------------
+     オフィス俯瞰（アイソメトリック）ビュー
+     -------------------------------------------------- */
+  .office-stage {
+    position: relative;
+    padding: 8px;
+    background: radial-gradient(ellipse at center, #2b3142 0%, #1c212c 80%);
+  }
+  .office-stage__wrap {
+    position: relative;
+    width: 100%;
+  }
+  .office-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* 机の上に重ねるネームタグ・ステータスランプ（HTMLオーバーレイ） */
+  .desk-label {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    text-align: center;
+    pointer-events: none;
+  }
+  .desk-label__lamp-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 3px;
+  }
+  .lamp {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #8a8f99;
+    box-shadow: 0 0 4px 1px rgba(0,0,0,0.4);
+    flex: none;
+  }
+  .lamp.status-idle   { background: #8a8f99; }
+  .lamp.status-working {
+    background: #ff8c00;
+    animation: lamp-blink 1s ease-in-out infinite;
+  }
+  .lamp.status-done   {
+    background: #34c759;
+    box-shadow: 0 0 8px 2px rgba(52,199,89,0.8);
+  }
+  @keyframes lamp-blink {
+    0%, 100% { opacity: 1; box-shadow: 0 0 10px 3px rgba(255,140,0,0.9); }
+    50%      { opacity: 0.3; box-shadow: 0 0 2px 0 rgba(255,140,0,0.3); }
+  }
+
+  .lamp-status-text {
+    font-size: 0.68rem;
+    color: #cfd3da;
+  }
+
+  .desk-label__name {
+    background: #ffffff;
+    color: #1b1f27;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+  }
+  .desk-label__role {
+    font-size: 0.62rem;
+    color: #a9afb9;
+    margin-top: 2px;
+    white-space: nowrap;
+  }
+  .desk-label__task {
+    margin-top: 3px;
+    font-size: 0.62rem;
+    color: #d8dbe2;
+    background: rgba(0,0,0,0.35);
+    padding: 1px 6px;
+    border-radius: 8px;
+    max-width: 130px;
+    white-space: normal;
+    line-height: 1.3;
+  }
+
+  /* 作業中の机はうっすら発光させる */
+  .desk-group.is-working .desk-monitor {
+    filter: drop-shadow(0 0 6px rgba(255,140,0,0.8));
+  }
+  .desk-group.is-done .desk-monitor {
+    filter: drop-shadow(0 0 6px rgba(52,199,89,0.7));
+  }
+
+  /* --------------------------------------------------
+     作業ログパネル
+     -------------------------------------------------- */
+  .log-panel__body {
+    max-height: 480px;
+    overflow-y: auto;
+    padding: 6px 0;
+  }
+  .log-item {
+    display: grid;
+    grid-template-columns: 62px 1fr;
+    gap: 8px;
+    padding: 7px 14px;
+    border-bottom: 1px solid #2c3342;
+    font-size: 0.82rem;
+    align-items: start;
+  }
+  .log-item:first-child {
+    background: #2a3346;
+  }
+  .log-item__time {
+    color: #8fb8ff;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .log-item__body .log-item__member {
+    font-weight: 700;
+    color: #ffd54a;
+    margin-right: 6px;
+  }
+  .log-empty {
+    padding: 14px;
+    color: #8a8f99;
+    font-size: 0.85rem;
+    text-align: center;
+  }
+
+  /* --------------------------------------------------
+     原価台帳パネル
+     -------------------------------------------------- */
+  .ledger-panel {
+    max-width: 1300px;
+    margin: 0 auto 20px;
+    padding: 0 12px;
+  }
+  .ledger-table-wrap {
+    overflow-x: auto;
+  }
+  table.ledger-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    min-width: 640px;
+  }
+  table.ledger-table th,
+  table.ledger-table td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #343b48;
+    white-space: nowrap;
+  }
+  table.ledger-table thead th {
+    background: #2c3342;
+    color: #cfd3da;
+    position: sticky;
+    top: 0;
+  }
+  table.ledger-table tbody tr:hover {
+    background: #2a3140;
+  }
+  .badge-type {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+  .badge-type--実測 { background: #1f4d2e; color: #7de89a; }
+  .badge-type--概算 { background: #4d3f1f; color: #ffd979; }
+
+  /* --------------------------------------------------
+     フッター
+     -------------------------------------------------- */
+  .site-footer {
+    text-align: center;
+    padding: 14px;
+    font-size: 0.75rem;
+    color: #767c88;
+  }
+
+  /* --------------------------------------------------
+     スマホ向け微調整
+     -------------------------------------------------- */
+  @media (max-width: 600px) {
+    .desk-label__task { max-width: 90px; }
+    .motto-banner__item { font-size: 0.9rem; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- 常時表示のサンプル表記（打消し表示：スクロールしても消えない） -->
+  <div class="sample-bar">
+    本サイトは制作テスト用のサンプルです。実在の事業・社員・実績ではありません。
+  </div>
+
+  <!-- 社訓の垂れ幕バナー -->
+  <div class="motto-banner">
+    <div class="motto-banner__inner">
+      <span class="motto-banner__item">法令遵守は品質</span>
+      <span class="motto-banner__item">灰色は灰色と言え</span>
+      <span class="motto-banner__item">決裁は社長</span>
+    </div>
+  </div>
+
+  <!-- ヘッダー -->
+  <header class="site-header">
+    <h1>AI社員オフィス ｜ 稼働状況ダッシュボード</h1>
+    <p><strong>本画面は制作テスト用のサンプルです。実在の事業・社員・実績ではありません。</strong>表示している社員名・作業内容・原価データは、代表者名を除き、すべて架空のサンプルデータです。<code>status.json</code> を1秒ごとに読み込んで画面に反映します。</p>
+  </header>
+
+  <!-- file:// で開いた場合の案内（エラーではなく情報表示） -->
+  <div id="fileWarning" class="notice-banner notice-banner--info">
+    <strong>【情報】</strong> このページは <code>file://</code>（ダブルクリック）で開かれているため、
+    ページ内に<strong>埋め込まれたサンプルデータ</strong>を表示しています。<br>
+    <code>status.json</code> を1秒ごとに自動反映（ライブ更新）するには、Web経由（https://）でご覧ください。
+  </div>
+
+  <!-- fetch失敗時の警告 -->
+  <div id="fetchError" class="notice-banner">
+    <strong>【エラー】</strong> <span id="fetchErrorMessage">status.json の読み込みに失敗しました。</span><br>
+    通信エラーなどで読み込めない場合は、しばらく待ってからページを再読み込みしてください。
+  </div>
+
+  <!-- メインレイアウト：オフィス俯瞰 + 作業ログ -->
+  <div class="main-layout">
+
+    <!-- オフィス俯瞰（アイソメトリック）パネル -->
+    <section class="panel">
+      <div class="panel__title">
+        <span>オフィス稼働状況（架空のサンプルデータ）</span>
+        <span class="updated-at">最終更新: <span id="updatedAtText">--</span></span>
+      </div>
+      <p class="panel-note">※表示中の氏名・ステータス・作業内容はすべて架空です。実際の稼働を示すものではありません。</p>
+      <div class="office-stage">
+        <div class="office-stage__wrap" id="officeStageWrap">
+          <!-- SVGと机ラベルはJSで生成 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 作業ログパネル -->
+    <section class="panel log-panel">
+      <div class="panel__title"><span>作業ログ</span><span style="font-weight:400;font-size:0.9rem;color:#e8e8ea;">※架空のサンプルデータ</span></div>
+      <div class="log-panel__body" id="logPanelBody">
+        <div class="log-empty">読み込み中...</div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- 原価台帳パネル -->
+  <section class="panel ledger-panel">
+    <div class="panel__title"><span>原価台帳（工程別）</span><span style="font-weight:400;font-size:0.9rem;color:#e8e8ea;">※架空のサンプルデータ</span></div>
+    <div class="ledger-table-wrap">
+      <table class="ledger-table">
+        <thead>
+          <tr>
+            <th>工程</th>
+            <th>担当</th>
+            <th>モデル</th>
+            <th>稼働回数</th>
+            <th>稼働規模</th>
+            <th>区分（サンプル）</th>
+          </tr>
+        </thead>
+        <tbody id="ledgerTableBody">
+          <tr><td colspan="6" class="log-empty">読み込み中...</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="panel-note" style="border-bottom:none;border-top:1px solid #343b48;">
+      ※本表の稼働回数・稼働規模はすべて架空のサンプル値です。実際の計測結果ではありません。<br>
+      ※モデル名は構成の表記例です。記載の数値は、当該モデルの実際の消費量・コストを示すものではありません。
+    </p>
+  </section>
+
+  <footer class="site-footer">
+    <strong>本画面は制作テスト用のサンプルです。実在の事業・社員・実績ではありません。</strong><br>
+    AI社員オフィス（稼働状況ダッシュボード） ／ データ元: status.json（1秒間隔でポーリング） ／ 表示内容はすべて架空のサンプルデータです
+    ／ <a href="../index.html" style="color:#8fb8ff;">コーポレートサイト（サンプル）へ</a>
+  </footer>
+
+  <!-- ==================================================
+       埋め込みサンプルデータ
+       - file://（ダブルクリック）で開いたときは、この内容を表示します。
+       - 表示内容を差し替えたい場合は、下記 JSON を直接編集してください
+         （status.json と同じスキーマ。ローカルサーバー経由では status.json が優先されます）。
+       - type="application/json" のためスクリプトとしては実行されません。
+       ================================================== -->
+  <script id="embeddedStatus" type="application/json">
+  {
+    "updatedAt": "2026-07-20T10:32:05+09:00（埋め込みサンプル）",
+    "members": [
+      { "id": "ceo",        "name": "YUKI",        "role": "社長",                   "status": "idle",    "task": "決裁待ちの案件を確認中" },
+      { "id": "pm",         "name": "PM 田中",     "role": "プロジェクトマネージャー", "status": "working", "task": "新規案件Cの要件整理・各担当への割り振り" },
+      { "id": "strategy",   "name": "戦略 佐藤",   "role": "戦略担当",               "status": "working", "task": "案件Cのターゲット設計を検討中" },
+      { "id": "writer",     "name": "ライター 鈴木", "role": "ライター",              "status": "done",    "task": "LP案Bのコピーをコンプラへ提出済み" },
+      { "id": "compliance", "name": "コンプラ 高橋", "role": "コンプラ担当",          "status": "working", "task": "LP案Bの打消し表示・視認性を再チェック中" },
+      { "id": "obone",      "name": "レビュー 山本", "role": "レビュー担当",           "status": "idle",    "task": "各部署を巡回中（現在は待機）" },
+      { "id": "coder",      "name": "コーダー",      "role": "コーダー",              "status": "done",    "task": "LP案AのHTML実装を社長へ提出済み" },
+      { "id": "accounting", "name": "経理 中村",    "role": "経理",                  "status": "idle",    "task": "月次原価締めの準備待ち" }
+    ],
+    "logs": [
+      { "time": "10:32:05", "member": "コンプラ",   "action": "LP案Bの打消し表示の視認性を再チェック中" },
+      { "time": "10:28:41", "member": "ライター",   "action": "LP案Bのコピーをコンプラへ提出" },
+      { "time": "10:15:03", "member": "戦略",       "action": "案件Cのターゲット設計を開始" },
+      { "time": "10:02:10", "member": "PM",         "action": "新規案件Cを受付、各担当へ割り振り" },
+      { "time": "09:50:00", "member": "コーダー",   "action": "LP案AをHTML実装、社長へ提出" },
+      { "time": "09:30:22", "member": "経理",       "action": "9月分の原価集計を確認" },
+      { "time": "09:12:47", "member": "レビュー",   "action": "各部署を巡回し表現トーンを確認" },
+      { "time": "08:55:30", "member": "社長",       "action": "LP案Aの最終決裁を実施" }
+    ],
+    "ledger": [
+      { "process": "コピー生成",     "member": "ライター", "model": "Claude Sonnet 5", "count": 12, "scale": "約8,000トークン/回",  "type": "実測想定（サンプル値）" },
+      { "process": "コンプラチェック", "member": "コンプラ", "model": "Claude Opus 4.8", "count": 9,  "scale": "約15,000トークン/回", "type": "実測想定（サンプル値）" },
+      { "process": "LP実装",         "member": "コーダー", "model": "Claude Sonnet 5", "count": 4,  "scale": "約40,000トークン/回", "type": "概算想定（サンプル値）" },
+      { "process": "戦略立案",       "member": "戦略",     "model": "Claude Sonnet 5", "count": 6,  "scale": "約10,000トークン/回", "type": "実測想定（サンプル値）" },
+      { "process": "進行管理",       "member": "PM",       "model": "Claude Sonnet 5", "count": 20, "scale": "約3,000トークン/回",  "type": "概算想定（サンプル値）" }
+    ]
+  }
+  </script>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ==================================================
+     机の配置定義（アイソメトリック座標）
+     8名分の机を 4列×2行 の格子に配置し、
+     等角投影（isometric projection）の式で座標変換する。
+     ================================================== */
+  var DESK_LAYOUT = [
+    { id: "ceo",         col: 0, row: 0, fallbackName: "YUKI",       fallbackRole: "社長" },
+    { id: "pm",          col: 1, row: 0, fallbackName: "PM",         fallbackRole: "プロジェクトマネージャー" },
+    { id: "strategy",    col: 2, row: 0, fallbackName: "戦略",       fallbackRole: "戦略担当" },
+    { id: "writer",      col: 3, row: 0, fallbackName: "ライター",   fallbackRole: "ライター" },
+    { id: "compliance",  col: 0, row: 1, fallbackName: "コンプラ",   fallbackRole: "コンプラ担当" },
+    { id: "obone",       col: 1, row: 1, fallbackName: "レビュー",   fallbackRole: "レビュー担当" },
+    { id: "coder",       col: 2, row: 1, fallbackName: "コーダー",   fallbackRole: "コーダー" },
+    { id: "accounting",  col: 3, row: 1, fallbackName: "経理",       fallbackRole: "経理" }
+  ];
+
+  // 注意：机（SVG図形）はviewBox座標系で描画され、.office-svgのwidth:100%/height:autoにより
+  // 実際のCSSピクセルへ縮小表示される（例：viewport1280px時はviewBox幅1000→実描画幅約824px、
+  // 縮小率≒0.824）。一方、ネームタグ（.desk-label）はHTMLオーバーレイのためCSS固定pxサイズ
+  // （font-size・padding等）で表示され、上記の縮小率の影響を受けない。
+  // そのため「机の縦間隔（TILE_H）」は、ラベルの実CSS高さ（タスク文2行の最長時で約100〜120px）を
+  // 縮小率で逆算した分より十分大きく確保する必要がある。
+  var VIEW_W = 1000;
+  var VIEW_H = 980;   // 机の間隔を広げたため、縦方向の描画領域も拡大（旧420→710→980）
+  var ORIGIN_X = 300;
+  var ORIGIN_Y = 245; // ネームタグが上端で見切れないよう少し下げる
+  var TILE_W = 400;   // 等角タイルの全幅（旧220→360→400。机とラベルの間隔を確保するため拡大）
+  var TILE_H = 320;   // 等角タイルの全高（旧110→220→320。同一列で縦に並ぶ机とラベルの重なりを解消するため拡大）
+  var DESK_DX = 55;   // 机（天板）の半幅
+  var DESK_DY = 27;   // 机（天板）の半高
+  var DESK_HEIGHT = 22; // 机の厚み（押し出し量）
+  var LABEL_LIFT = 75; // 机の中心からネームタグ下端までの距離（机の天板・椅子のすぐ上に収まる値に調整）
+
+  // 等角投影座標を算出（col, row → 画面上のx, y）
+  function isoPos(col, row) {
+    return {
+      x: ORIGIN_X + (col - row) * (TILE_W / 2),
+      y: ORIGIN_Y + (col + row) * (TILE_H / 2)
+    };
+  }
+
+  var SVG_NS = "http://www.w3.org/2000/svg";
+
+  function svgEl(name, attrs) {
+    var el = document.createElementNS(SVG_NS, name);
+    for (var k in attrs) { el.setAttribute(k, attrs[k]); }
+    return el;
+  }
+
+  function polygonPoints(points) {
+    return points.map(function (p) { return p[0] + "," + p[1]; }).join(" ");
+  }
+
+  /**
+   * 1つの机（等角キューブ + 簡易モニター + 椅子）を描画する。
+   * cx, cy は天板中心（等角座標系）
+   */
+  function buildDeskGroup(deskDef, cx, cy) {
+    var g = svgEl("g", { "class": "desk-group", "data-id": deskDef.id });
+
+    var top    = [cx, cy - DESK_DY];
+    var right  = [cx + DESK_DX, cy];
+    var bottom = [cx, cy + DESK_DY];
+    var left   = [cx - DESK_DX, cy];
+    var topH    = [top[0], top[1] + DESK_HEIGHT];
+    var rightH  = [right[0], right[1] + DESK_HEIGHT];
+    var bottomH = [bottom[0], bottom[1] + DESK_HEIGHT];
+    var leftH   = [left[0], left[1] + DESK_HEIGHT];
+
+    // 椅子（机の奥に小さな菱形として配置）
+    var chairCx = cx, chairCy = cy - DESK_DY * 1.9;
+    var chairDx = 18, chairDy = 9;
+    var chair = svgEl("polygon", {
+      points: polygonPoints([
+        [chairCx, chairCy - chairDy],
+        [chairCx + chairDx, chairCy],
+        [chairCx, chairCy + chairDy],
+        [chairCx - chairDx, chairCy]
+      ]),
+      fill: "#4a5063"
+    });
+    g.appendChild(chair);
+
+    // 机 左面・右面（側面：陰影で立体感を出す）
+    var leftFace = svgEl("polygon", {
+      points: polygonPoints([left, bottom, bottomH, leftH]),
+      fill: "#a9895f"
+    });
+    var rightFace = svgEl("polygon", {
+      points: polygonPoints([right, bottom, bottomH, rightH]),
+      fill: "#8f7250"
+    });
+    g.appendChild(leftFace);
+    g.appendChild(rightFace);
+
+    // 机 天板（上面）
+    var topFace = svgEl("polygon", {
+      points: polygonPoints([top, right, bottom, left]),
+      fill: "#d9c2a3",
+      stroke: "#b89b73",
+      "stroke-width": "1"
+    });
+    g.appendChild(topFace);
+
+    // モニター（簡易的な立方体を天板中央やや奥に配置）
+    var monCx = cx, monCy = cy - DESK_DY * 0.35;
+    var monDx = 20, monDy = 10, monH = 22;
+    var monTop    = [monCx, monCy - monDy];
+    var monRight  = [monCx + monDx, monCy];
+    var monBottom = [monCx, monCy + monDy];
+    var monLeft   = [monCx - monDx, monCy];
+    var monTopH    = [monTop[0], monTop[1] - monH];
+    var monRightH  = [monRight[0], monRight[1] - monH];
+    var monLeftH   = [monLeft[0], monLeft[1] - monH];
+
+    var monitor = svgEl("g", { "class": "desk-monitor" });
+    var monLeftFace = svgEl("polygon", {
+      points: polygonPoints([monLeft, monBottom, monRight, monRightH, monLeftH]),
+      fill: "#2b3142",
+      opacity: "0"
+    });
+    // モニター背面・側面（簡略：正面パネルのみで代表させる）
+    var monFront = svgEl("polygon", {
+      points: polygonPoints([monLeftH, monRightH, monRight, monLeft]),
+      fill: "#38b6ff",
+      stroke: "#1c6f9c",
+      "stroke-width": "1"
+    });
+    var monStandTop = svgEl("polygon", {
+      points: polygonPoints([monTop, monRight, monBottom, monLeft]),
+      fill: "#20242e"
+    });
+    monitor.appendChild(monFront);
+    monitor.appendChild(monStandTop);
+    g.appendChild(monitor);
+
+    return g;
+  }
+
+  var stageWrap = document.getElementById("officeStageWrap");
+  var svgRoot = svgEl("svg", {
+    "class": "office-svg",
+    viewBox: "0 0 " + VIEW_W + " " + VIEW_H,
+    preserveAspectRatio: "xMidYMid meet"
+  });
+
+  // 床（フロア）背景タイルの土台を薄く描画
+  var floorBase = svgEl("rect", {
+    x: "0", y: "0", width: String(VIEW_W), height: String(VIEW_H), fill: "transparent"
+  });
+  svgRoot.appendChild(floorBase);
+
+  // 机ラベル（ネームタグ・ステータスランプ）は通常のHTMLで机の上に重ねる
+  var deskLabels = {}; // id -> { nameEl, roleEl, taskEl, lampEl, statusTextEl, groupEl }
+
+  DESK_LAYOUT.forEach(function (deskDef) {
+    var pos = isoPos(deskDef.col, deskDef.row);
+    var g = buildDeskGroup(deskDef, pos.x, pos.y);
+    svgRoot.appendChild(g);
+
+    // ラベル用オーバーレイdiv（%座標でSVG上の位置に合わせる）
+    var labelDiv = document.createElement("div");
+    labelDiv.className = "desk-label";
+    labelDiv.style.left = ((pos.x / VIEW_W) * 100) + "%"; // 机の中心x（水平中央）に一致させる
+    labelDiv.style.top = (((pos.y - LABEL_LIFT) / VIEW_H) * 100) + "%"; // 机の天板・椅子の直上に来るよう調整
+
+    labelDiv.innerHTML =
+      '<div class="desk-label__lamp-row">' +
+        '<span class="lamp status-idle" data-role="lamp"></span>' +
+        '<span class="lamp-status-text" data-role="statusText">待機</span>' +
+      '</div>' +
+      '<div class="desk-label__name" data-role="name">' + deskDef.fallbackName + '</div>' +
+      '<div class="desk-label__role" data-role="role">' + deskDef.fallbackRole + '</div>' +
+      '<div class="desk-label__task" data-role="task">-</div>';
+
+    stageWrap.appendChild(labelDiv);
+
+    deskLabels[deskDef.id] = {
+      groupEl: g,
+      lampEl: labelDiv.querySelector('[data-role="lamp"]'),
+      statusTextEl: labelDiv.querySelector('[data-role="statusText"]'),
+      nameEl: labelDiv.querySelector('[data-role="name"]'),
+      roleEl: labelDiv.querySelector('[data-role="role"]'),
+      taskEl: labelDiv.querySelector('[data-role="task"]')
+    };
+  });
+
+  stageWrap.insertBefore(svgRoot, stageWrap.firstChild);
+
+  /* ==================================================
+     ステータス文言・クラスの対応表
+     ================================================== */
+  var STATUS_LABEL = { idle: "待機", working: "作業中", done: "完了" };
+
+  function applyMemberStatus(member) {
+    var refs = deskLabels[member.id];
+    if (!refs) { return; } // 未知のIDは無視（レイアウト未定義）
+
+    // ランプの色・点滅
+    refs.lampEl.classList.remove("status-idle", "status-working", "status-done");
+    refs.lampEl.classList.add("status-" + member.status);
+    refs.statusTextEl.textContent = STATUS_LABEL[member.status] || member.status;
+
+    // 机の発光（作業中=オレンジ、完了=グリーン）
+    refs.groupEl.classList.remove("is-working", "is-done");
+    if (member.status === "working") { refs.groupEl.classList.add("is-working"); }
+    if (member.status === "done") { refs.groupEl.classList.add("is-done"); }
+
+    // ネームタグ・役割・現在の作業内容
+    if (member.name) { refs.nameEl.textContent = member.name; }
+    if (member.role) { refs.roleEl.textContent = member.role; }
+    refs.taskEl.textContent = member.task || "-";
+  }
+
+  /* ==================================================
+     作業ログの描画
+     ================================================== */
+  var logPanelBody = document.getElementById("logPanelBody");
+
+  function renderLogs(logs) {
+    if (!logs || logs.length === 0) {
+      logPanelBody.innerHTML = '<div class="log-empty">ログはまだありません。</div>';
+      return;
+    }
+    // time（HH:MM:SS想定）で降順ソートし、新しいものを一番上に表示する
+    var sorted = logs.slice().sort(function (a, b) {
+      return (b.time || "").localeCompare(a.time || "");
+    });
+
+    var html = sorted.map(function (log) {
+      return (
+        '<div class="log-item">' +
+          '<div class="log-item__time">' + escapeHtml(log.time || "--:--:--") + '</div>' +
+          '<div class="log-item__body">' +
+            '<span class="log-item__member">' + escapeHtml(log.member || "―") + '</span>' +
+            '<span>' + escapeHtml(log.action || "") + '</span>' +
+          '</div>' +
+        '</div>'
+      );
+    }).join("");
+
+    logPanelBody.innerHTML = html;
+  }
+
+  /* ==================================================
+     原価台帳の描画
+     ================================================== */
+  var ledgerTableBody = document.getElementById("ledgerTableBody");
+
+  function renderLedger(rows) {
+    if (!rows || rows.length === 0) {
+      ledgerTableBody.innerHTML = '<tr><td colspan="6" class="log-empty">データがありません。</td></tr>';
+      return;
+    }
+    var html = rows.map(function (row) {
+      // 「実測想定（サンプル値）」等の表記に対応（先頭が「実測」かどうかで色分け）
+      var typeClass = "badge-type--" + (String(row.type).indexOf("実測") === 0 ? "実測" : "概算");
+      return (
+        '<tr>' +
+          '<td>' + escapeHtml(row.process || "") + '</td>' +
+          '<td>' + escapeHtml(row.member || "") + '</td>' +
+          '<td>' + escapeHtml(row.model || "") + '</td>' +
+          '<td>' + escapeHtml(String(row.count != null ? row.count : "")) + '</td>' +
+          '<td>' + escapeHtml(row.scale || "") + '</td>' +
+          '<td><span class="badge-type ' + typeClass + '">' + escapeHtml(row.type || "") + '</span></td>' +
+        '</tr>'
+      );
+    }).join("");
+    ledgerTableBody.innerHTML = html;
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  /* ==================================================
+     データの反映
+     - 既定は「ページ埋め込みデータ」を表示（file:// でも必ず表示される）。
+     - ローカルサーバー経由（http/https）のときだけ status.json を
+       1秒ごとにポーリングして上書きし、ライブ更新にする。
+     ================================================== */
+  var fetchErrorEl = document.getElementById("fetchError");
+  var fetchErrorMessageEl = document.getElementById("fetchErrorMessage");
+  var fileWarningEl = document.getElementById("fileWarning");
+  var updatedAtTextEl = document.getElementById("updatedAtText");
+
+  // 取得済みデータを画面へ反映する共通処理
+  function applyData(data) {
+    if (!data) { return; }
+    if (data.updatedAt) {
+      updatedAtTextEl.textContent = data.updatedAt;
+    }
+    if (Array.isArray(data.members)) {
+      data.members.forEach(applyMemberStatus);
+    }
+    renderLogs(data.logs);
+    renderLedger(data.ledger);
+  }
+
+  // ページ内に埋め込まれたサンプルデータ（<script id="embeddedStatus">）を読む
+  function readEmbeddedStatus() {
+    var el = document.getElementById("embeddedStatus");
+    if (!el) { return null; }
+    try {
+      return JSON.parse(el.textContent);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function showFetchError(message) {
+    fetchErrorMessageEl.textContent = message;
+    fetchErrorEl.classList.add("is-visible");
+  }
+
+  function hideFetchError() {
+    fetchErrorEl.classList.remove("is-visible");
+  }
+
+  function loadStatus() {
+    fetch("status.json", { cache: "no-store" })
+      .then(function (res) {
+        if (!res.ok) {
+          throw new Error("HTTPステータス " + res.status + " が返されました。");
+        }
+        return res.json();
+      })
+      .then(function (data) {
+        hideFetchError();
+        applyData(data); // status.json の内容で埋め込みデータを上書き
+      })
+      .catch(function (err) {
+        // 取得に失敗しても、直前に表示済みの埋め込みデータは保持される
+        showFetchError(
+          "status.json の読み込みに失敗しました（" + err.message + "）。埋め込みデータを表示しています。"
+        );
+      });
+  }
+
+  // (1) まず埋め込みデータで即描画（サーバー不要・file:// でも表示される）
+  applyData(readEmbeddedStatus());
+
+  // (2) 開き方に応じて挙動を分岐
+  if (window.location.protocol === "file:") {
+    // ダブルクリック（file://）：fetch はブラウザにブロックされるため行わず、
+    // 埋め込みデータ表示中である旨を情報バナーで案内する。
+    fileWarningEl.classList.add("is-visible");
+  } else {
+    // ローカルサーバー経由：status.json を初回取得＋1秒ごとにポーリング
+    loadStatus();
+    setInterval(loadStatus, 1000);
+  }
+
+})();
+</script>
+</body>
+</html>

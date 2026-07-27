@@ -1,0 +1,79 @@
+{
+  "_note": "制作テスト用のサンプルデータです。実在の事業・社員・実績ではありません。This is fictional sample data for a portfolio demo. Not real operational data.",
+  "updatedAt": "2026-07-20T10:32:05+09:00（サンプル）",
+  "members": [
+    {
+      "id": "ceo",
+      "name": "YUKI",
+      "role": "社長",
+      "status": "idle",
+      "task": "決裁待ちの案件を確認中"
+    },
+    {
+      "id": "pm",
+      "name": "PM 田中",
+      "role": "プロジェクトマネージャー",
+      "status": "working",
+      "task": "新規案件Cの要件整理・各担当への割り振り"
+    },
+    {
+      "id": "strategy",
+      "name": "戦略 佐藤",
+      "role": "戦略担当",
+      "status": "working",
+      "task": "案件Cのターゲット設計を検討中"
+    },
+    {
+      "id": "writer",
+      "name": "ライター 鈴木",
+      "role": "ライター",
+      "status": "done",
+      "task": "LP案Bのコピーをコンプラへ提出済み"
+    },
+    {
+      "id": "compliance",
+      "name": "コンプラ 高橋",
+      "role": "コンプラ担当",
+      "status": "working",
+      "task": "LP案Bの打消し表示・視認性を再チェック中"
+    },
+    {
+      "id": "obone",
+      "name": "レビュー 山本",
+      "role": "レビュー担当",
+      "status": "idle",
+      "task": "各部署を巡回中（現在は待機）"
+    },
+    {
+      "id": "coder",
+      "name": "コーダー",
+      "role": "コーダー",
+      "status": "done",
+      "task": "LP案AのHTML実装を社長へ提出済み"
+    },
+    {
+      "id": "accounting",
+      "name": "経理 中村",
+      "role": "経理",
+      "status": "idle",
+      "task": "月次原価締めの準備待ち"
+    }
+  ],
+  "logs": [
+    { "time": "10:32:05", "member": "コンプラ", "action": "LP案Bの打消し表示の視認性を再チェック中" },
+    { "time": "10:28:41", "member": "ライター", "action": "LP案Bのコピーをコンプラへ提出" },
+    { "time": "10:15:03", "member": "戦略", "action": "案件Cのターゲット設計を開始" },
+    { "time": "10:02:10", "member": "PM", "action": "新規案件Cを受付、各担当へ割り振り" },
+    { "time": "09:50:00", "member": "コーダー", "action": "LP案AをHTML実装、社長へ提出" },
+    { "time": "09:30:22", "member": "経理", "action": "9月分の原価集計を確認" },
+    { "time": "09:12:47", "member": "レビュー", "action": "各部署を巡回し表現トーンを確認" },
+    { "time": "08:55:30", "member": "社長", "action": "LP案Aの最終決裁を実施" }
+  ],
+  "ledger": [
+    { "process": "コピー生成", "member": "ライター", "model": "Claude Sonnet 5", "count": 12, "scale": "約8,000トークン/回", "type": "実測想定（サンプル値）" },
+    { "process": "コンプラチェック", "member": "コンプラ", "model": "Claude Opus 4.8", "count": 9, "scale": "約15,000トークン/回", "type": "実測想定（サンプル値）" },
+    { "process": "LP実装", "member": "コーダー", "model": "Claude Sonnet 5", "count": 4, "scale": "約40,000トークン/回", "type": "概算想定（サンプル値）" },
+    { "process": "戦略立案", "member": "戦略", "model": "Claude Sonnet 5", "count": 6, "scale": "約10,000トークン/回", "type": "実測想定（サンプル値）" },
+    { "process": "進行管理", "member": "PM", "model": "Claude Sonnet 5", "count": 20, "scale": "約3,000トークン/回", "type": "概算想定（サンプル値）" }
+  ]
+}
