@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お問い合わせ｜（社名）── 金融特化型マーケティング代理店</title>
+<meta name="description" content="金融特化型マーケティング代理店へのお問い合わせページです。マーケティング戦略・インフルエンサー施策・LP制作・ライティングに関するご相談を、フォームより承ります（現在受付準備中です）。">
+<style>
+  /* ============================================
+     基本設定：index.html / service.html / strength.html / company.html の
+     デザイントークンをそのまま継承（カラーパレット・フォント指定・共通クラスは既存4ページと同一にする）
+     ============================================ */
+  :root{
+    /* カラー：ネイビー/グレー基調＋抑えたディープブルーの差し色（既存ページと同一） */
+    --navy-900:#0f2038;
+    --navy-800:#152c4a;
+    --navy-700:#1c3a5e;
+    --blue-accent:#1f4e8c;
+    --blue-accent-dark:#173c6c;
+    --gray-900:#1c2430;
+    --gray-700:#454f5c;
+    --gray-500:#6b7480;
+    --gray-200:#e3e7ec;
+    --gray-100:#f4f6f8;
+    --white:#ffffff;
+    --note-bg:#eef2f7;
+    --note-border:#8fa3bd;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:-apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic", "Meiryo", sans-serif;
+    color:var(--gray-900);
+    background:var(--white);
+    line-height:1.8;
+    -webkit-text-size-adjust:100%;
+  }
+  img,svg{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{margin:0;padding:0;list-style:none;}
+  h1,h2,h3,p,dl,dd,dt{margin:0;}
+  section{padding:56px 20px;}
+  .container{max-width:1080px;margin:0 auto;}
+
+  /* 見出し共通 */
+  .section-label{
+    display:inline-block;
+    font-size:0.8rem;
+    letter-spacing:0.12em;
+    color:var(--blue-accent);
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .section-title{
+    font-size:1.5rem;
+    font-weight:700;
+    line-height:1.5;
+    color:var(--navy-900);
+    margin-bottom:20px;
+  }
+  .section-lead{
+    font-size:1rem;
+    color:var(--gray-700);
+    margin-bottom:28px;
+  }
+
+  /* ============================================
+     ヘッダー（既存ページと同一デザイン）
+     ============================================ */
+  header.site-header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:var(--white);
+    border-bottom:1px solid var(--gray-200);
+  }
+  .header-inner{
+    max-width:1080px;
+    margin:0 auto;
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo{
+    font-size:1.05rem;
+    font-weight:700;
+    color:var(--navy-900);
+    letter-spacing:0.02em;
+  }
+  .logo .logo-sub{
+    display:block;
+    font-size:0.65rem;
+    font-weight:500;
+    color:var(--gray-500);
+    letter-spacing:0.08em;
+  }
+
+  /* ハンバーガーメニュー（モバイル） */
+  .nav-toggle{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:5px;
+    width:40px;
+    height:40px;
+    background:none;
+    border:1px solid var(--gray-200);
+    border-radius:6px;
+    cursor:pointer;
+  }
+  .nav-toggle span{
+    display:block;
+    width:20px;
+    height:2px;
+    background:var(--navy-900);
+    transition:transform .2s ease, opacity .2s ease;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;}
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  nav.main-nav{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--white);
+    border-bottom:1px solid var(--gray-200);
+    display:none;
+    flex-direction:column;
+    padding:8px 20px 16px;
+  }
+  nav.main-nav.is-open{display:flex;}
+  nav.main-nav a{
+    display:block;
+    padding:12px 4px;
+    font-size:0.95rem;
+    color:var(--gray-900);
+    border-bottom:1px solid var(--gray-100);
+  }
+  nav.main-nav a:last-child{border-bottom:none;}
+  /* 現在ページ（お問い合わせ）を示す表示 */
+  nav.main-nav a.is-current,
+  footer.site-footer nav.footer-nav a.is-current{
+    color:var(--blue-accent);
+    font-weight:700;
+  }
+  .nav-cta{
+    margin-top:12px;
+  }
+  .nav-cta a{
+    display:block;
+    text-align:center;
+    background:var(--blue-accent);
+    color:var(--white)!important;
+    border-radius:6px;
+    padding:12px !important;
+    font-weight:700;
+  }
+
+  @media (min-width:768px){
+    .nav-toggle{display:none;}
+    nav.main-nav{
+      position:static;
+      display:flex;
+      flex-direction:row;
+      align-items:center;
+      border:none;
+      padding:0;
+      gap:6px;
+      width:auto;
+    }
+    nav.main-nav a{
+      border-bottom:none;
+      padding:8px 12px;
+      font-size:0.9rem;
+      white-space:nowrap;
+    }
+    .nav-cta{margin-top:0;margin-left:8px;}
+    .nav-cta a{padding:9px 16px !important;font-size:0.85rem;white-space:nowrap;}
+  }
+
+  /* ============================================
+     ボタン共通
+     ============================================ */
+  .btn-primary{
+    display:inline-block;
+    background:var(--blue-accent);
+    color:var(--white);
+    font-weight:700;
+    font-size:1rem;
+    padding:16px 28px;
+    border-radius:6px;
+    border:none;
+    cursor:pointer;
+    text-align:center;
+  }
+  .btn-primary:hover{background:var(--blue-accent-dark);}
+  /* 送信ボタン（準備中）：非活性であることが一見して分かるグレーアウト表示 */
+  .btn-primary:disabled,
+  .btn-primary:disabled:hover{
+    background:var(--gray-500);
+    color:#eef1f4;
+    cursor:not-allowed;
+    opacity:0.85;
+  }
+  .btn-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    color:var(--blue-accent);
+    font-weight:700;
+    font-size:0.95rem;
+    border-bottom:2px solid var(--blue-accent);
+    padding-bottom:2px;
+  }
+
+  /* 打消し表示・注記共通：本文と同等以上の視認性を確保する（極小フォント・低コントラスト厳禁） */
+  .note-box{
+    background:var(--note-bg);
+    border-left:4px solid var(--note-border);
+    color:var(--gray-900);
+    font-size:0.95rem;
+    line-height:1.7;
+    padding:14px 16px;
+    border-radius:4px;
+  }
+  .note-box p + p{margin-top:8px;}
+
+  /* 「要確認」バッジ：未確定情報であることが一見して分かる控えめな視覚処理（グレーの破線囲み）。
+     文言そのものは変更せず「【要確認】」のまま表示する。極小フォント・低コントラストにはしない。 */
+  .badge-tbd{
+    display:inline-block;
+    border:1px dashed var(--gray-500);
+    border-radius:4px;
+    padding:2px 10px;
+    font-size:0.88rem;
+    font-weight:700;
+    color:var(--gray-700);
+    background:var(--gray-100);
+    line-height:1.7;
+  }
+
+  /* ============================================
+     セクション：ファーストビュー（コンパクト・ネイビー）
+     ============================================ */
+  .hero{
+    background:linear-gradient(180deg, var(--navy-900) 0%, var(--navy-800) 100%);
+    color:var(--white);
+    padding:48px 20px 40px;
+  }
+  .hero .container{text-align:center;}
+  .hero h1{
+    font-size:1.6rem;
+    line-height:1.6;
+    font-weight:700;
+    margin-bottom:16px;
+  }
+  .hero p.sub{
+    font-size:1rem;
+    color:#d3dceb;
+    line-height:1.9;
+    max-width:640px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  @media (min-width:768px){
+    .hero h1{font-size:2rem;}
+    .hero p.sub{font-size:1.05rem;}
+  }
+
+  /* ============================================
+     セクション：お問い合わせフォーム
+     ============================================ */
+  .form-section{background:var(--white);}
+  .contact-form{
+    background:var(--gray-100);
+    border-radius:10px;
+    padding:24px 20px;
+    max-width:640px;
+    margin:0 auto;
+  }
+  .form-row{margin-bottom:18px;}
+  .form-row label{
+    display:block;
+    font-size:0.92rem;
+    font-weight:700;
+    color:var(--gray-900);
+    margin-bottom:6px;
+  }
+  .form-row .required{
+    color:var(--blue-accent-dark);
+    font-size:0.8rem;
+    margin-left:6px;
+    font-weight:700;
+  }
+  .form-row .optional{
+    color:var(--gray-500);
+    font-size:0.8rem;
+    margin-left:6px;
+    font-weight:700;
+  }
+  .form-row input,
+  .form-row select,
+  .form-row textarea{
+    width:100%;
+    padding:12px;
+    font-size:0.95rem;
+    border:1px solid var(--gray-200);
+    border-radius:6px;
+    font-family:inherit;
+    background:var(--white);
+    color:var(--gray-900);
+  }
+  .form-row textarea{min-height:120px;resize:vertical;}
+  .contact-form .note-box{margin-bottom:18px;}
+  .contact-form .btn-primary{width:100%;margin-top:6px;font-size:1.02rem;}
+
+  /* ============================================
+     セクション：お問い合わせから対応までの流れ（グレー背景）
+     ============================================ */
+  .steps-section{background:var(--gray-100);}
+  .contact-steps{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+    margin:24px 0 24px;
+  }
+  .contact-steps .step-item{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    background:var(--white);
+    border-radius:8px;
+    padding:18px 16px;
+  }
+  .contact-steps .step-num{
+    flex:0 0 auto;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    background:var(--navy-900);
+    color:var(--white);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:0.95rem;
+  }
+  .contact-steps .step-text{
+    font-size:0.98rem;
+    color:var(--gray-900);
+    padding-top:5px;
+    font-weight:500;
+    line-height:1.8;
+  }
+  @media (min-width:768px){
+    .contact-steps{grid-template-columns:repeat(3,1fr);}
+    .contact-steps .step-item{flex-direction:column;text-align:center;align-items:center;}
+  }
+
+  /* ============================================
+     セクション：直接のお問い合わせ窓口（白背景）
+     ============================================ */
+  .direct-section{background:var(--white);}
+  .info-table{
+    border-top:1px solid var(--gray-200);
+    margin-bottom:24px;
+  }
+  .info-row{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:6px;
+    padding:18px 0;
+    border-bottom:1px solid var(--gray-200);
+  }
+  .info-row dt{
+    font-size:0.9rem;
+    font-weight:700;
+    color:var(--navy-900);
+  }
+  .info-row dd{
+    font-size:1rem;
+    color:var(--gray-900);
+    line-height:1.8;
+  }
+  @media (min-width:768px){
+    .info-row{grid-template-columns:180px 1fr;gap:20px;align-items:baseline;}
+  }
+
+  /* ============================================
+     セクション：補足注記（グレー背景）
+     ============================================ */
+  .supplement-section{background:var(--gray-100);}
+  .supplement-section .note-box{max-width:720px;margin:0 auto;}
+
+  @media (min-width:768px){
+    section{padding:80px 20px;}
+    .section-title{font-size:1.9rem;}
+    .container{padding:0 20px;}
+  }
+
+  /* ============================================
+     フッター（共通パーツ：既存4ページと同一。リスク・法令関連表示は常時視認可能な位置に配置）
+     ============================================ */
+  footer.site-footer{
+    background:var(--navy-900);
+    color:#c9d2de;
+    padding:36px 20px 24px;
+  }
+  footer.site-footer .footer-logo{
+    color:var(--white);
+    font-weight:700;
+    font-size:1.05rem;
+    margin-bottom:16px;
+  }
+  footer.site-footer nav.footer-nav{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 18px;
+    margin-bottom:20px;
+  }
+  footer.site-footer nav.footer-nav a{
+    font-size:0.88rem;
+    color:#c9d2de;
+  }
+  footer.site-footer .footer-notice{
+    font-size:0.85rem;
+    line-height:1.8;
+    color:#c9d2de;
+    border-top:1px solid rgba(255,255,255,0.15);
+    padding-top:16px;
+    margin-bottom:10px;
+  }
+  footer.site-footer .copyright{
+    font-size:0.8rem;
+    color:#8894a3;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     ヘッダー：index.html / service.html / strength.html / company.html と同一デザイン。
+     「お問い合わせ」は本ページ自身のため現在ページ表示（自己リンク＋強調）とする。
+     他のナビは各ページへ、nav-cta は本ページ内のフォーム（#form）へ遷移する。
+     ============================================ -->
+<header class="site-header">
+  <div class="header-inner">
+    <a class="logo" href="index.html">（社名）
+      <span class="logo-sub">FINANCIAL MARKETING AGENCY</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="メニューを開く">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="main-nav" id="mainNav">
+      <a href="service.html">サービス</a>
+      <a href="strength.html">強み</a>
+      <a href="flow.html">制作フロー</a>
+      <a href="company.html">会社概要</a>
+      <a href="contact.html" class="is-current" aria-current="page">お問い合わせ</a>
+      <div class="nav-cta"><a href="#form">お問い合わせ・ご相談はこちら</a></div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============================================
+       ファーストビュー（コンパクト・ネイビー）
+       ============================================ -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <h1>お問い合わせ</h1>
+      <p class="sub">マーケティング戦略の立案、インフルエンサー施策、LP制作、ライティングなど、各サービスに関するご相談は、下記のフォームより承ります（現在受付準備中です）。受付開始後は、一件ずつ丁寧に対応してまいります。</p>
+    </div>
+  </section>
+
+  <!-- ============================================
+       お問い合わせフォーム（白背景）
+       ============================================ -->
+  <section class="form-section" id="form">
+    <div class="container">
+      <p class="section-label">FORM</p>
+      <h2 class="section-title">お問い合わせフォーム</h2>
+
+      <form class="contact-form" id="contactForm" action="#">
+        <div class="form-row">
+          <label for="companyName">会社名<span class="required">必須</span></label>
+          <input type="text" id="companyName" name="companyName" required>
+        </div>
+        <div class="form-row">
+          <label for="personName">お名前<span class="required">必須</span></label>
+          <input type="text" id="personName" name="personName" required>
+        </div>
+        <div class="form-row">
+          <label for="email">メールアドレス<span class="required">必須</span></label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-row">
+          <label for="topic">ご相談内容<span class="required">必須</span></label>
+          <select id="topic" name="topic" required>
+            <option value="" selected disabled>選択してください</option>
+            <option value="strategy">マーケティング戦略</option>
+            <option value="influencer">インフルエンサー施策</option>
+            <option value="lp">LP制作</option>
+            <option value="writing">ライティング</option>
+            <option value="other">その他</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="detail">ご相談内容の詳細<span class="optional">任意</span></label>
+          <textarea id="detail" name="detail"></textarea>
+        </div>
+
+        <div class="note-box">※ご入力いただいた情報は、お問い合わせへの回答および必要なご連絡の目的にのみ使用し、ご本人の同意なく第三者へ提供いたしません。</div>
+        <div class="note-box">※本フォームは制作テスト用のサンプルのため、送信はできません。</div>
+
+        <!-- 送信機能は未実装。ボタンは非活性（disabled）とし、クリックしても一切動作しない -->
+        <button type="submit" class="btn-primary" disabled>送信する（サンプル・送信不可）</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============================================
+       お問い合わせから対応までの流れ（グレー背景）
+       ============================================ -->
+  <section class="steps-section" id="steps">
+    <div class="container">
+      <p class="section-label">STEPS</p>
+      <h2 class="section-title">お問い合わせから対応までの流れ</h2>
+
+      <div class="contact-steps">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>内容の確認</strong> — いただいたお問い合わせ内容を確認いたします。</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>担当者よりご連絡</strong> — 内容に応じて、担当者よりご連絡いたします。</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>ヒアリング・ご提案</strong> — 詳しい状況をお伺いした上で、対応の方向性についてご案内いたします。</div>
+        </div>
+      </div>
+
+      <div class="note-box">※受付開始後のご返信までのお時間は、状況により前後する場合がございます。できる限り早めのご案内を心がけております。</div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       直接のお問い合わせ窓口（白背景）
+       ============================================ -->
+  <section class="direct-section" id="direct">
+    <div class="container">
+      <p class="section-label">DIRECT</p>
+      <h2 class="section-title">直接のお問い合わせ窓口</h2>
+
+      <dl class="info-table">
+        <div class="info-row">
+          <dt>電話番号</dt>
+          <dd><span class="badge-tbd">【要確認】</span></dd>
+        </div>
+        <div class="info-row">
+          <dt>メールアドレス</dt>
+          <dd><span class="badge-tbd">【要確認】</span></dd>
+        </div>
+      </dl>
+
+      <div class="note-box">※お電話・メールでの窓口も現在調整中です。確定次第、本ページでご案内いたします。</div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       補足注記（グレー背景・ページ末尾）
+       ============================================ -->
+  <section class="supplement-section" id="supplement">
+    <div class="container">
+      <div class="note-box">
+        <p>※まずは現状のマーケティング課題やコンプラ体制についてのご相談から承ります。</p>
+        <p>※弊社は法律事務所ではないため、法的な助言や法務判断そのものを行うご相談への回答は行っておりません。表現・構成・体制面でのご相談を中心に承ります。</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================
+     フッター（共通パーツ：既存4ページと同一。リスク・法令関連表示は常時視認可能な位置に配置）
+     ============================================ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-logo">（社名）</div>
+
+    <nav class="footer-nav">
+      <a href="service.html">サービス</a>
+      <a href="strength.html">強み</a>
+      <a href="flow.html">制作フロー</a>
+      <a href="company.html">会社概要</a>
+      <a href="contact.html" class="is-current" aria-current="page">お問い合わせ</a>
+    </nav>
+
+    <p class="footer-notice"><strong>本サイトは制作テスト用のサンプルです。実在の事業・サービスではありません。</strong><br>本サイトは制作中です。掲載内容は今後変更される場合があります。</p>
+
+    <p class="copyright">© （社名） All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  // ハンバーガーメニューの開閉制御（外部ライブラリ不使用の素のJavaScript。既存ページと同一処理）
+  (function () {
+    var toggleBtn = document.getElementById('navToggle');
+    var nav = document.getElementById('mainNav');
+
+    toggleBtn.addEventListener('click', function () {
+      var isOpen = nav.classList.toggle('is-open');
+      toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      toggleBtn.setAttribute('aria-label', isOpen ? 'メニューを閉じる' : 'メニューを開く');
+    });
+
+    // ナビ内リンクをクリックしたらメニューを閉じる（モバイル時）
+    nav.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        nav.classList.remove('is-open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+
+  // 注：本ページの送信ボタンは disabled のため送信処理は一切実装しない。
+  // （送信・成功/エラーメッセージ等のJSは意図的に実装していません）
+</script>
+
+</body>
+</html>

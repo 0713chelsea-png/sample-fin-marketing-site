@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>（社名）｜金融特化型マーケティング代理店</title>
+<meta name="description" content="金融事業者専門のマーケティング代理店。戦略・インフルエンサー施策・LP制作・ライティングを、コンプライアンスチェックを制作工程に組み込んだ体制で提供します。">
+<style>
+  /* ============================================
+     基本設定：日本語ゴシック系システムフォント指定
+     ============================================ */
+  :root{
+    /* カラー：ネイビー/グレー基調＋抑えたディープブルーの差し色 */
+    --navy-900:#0f2038;
+    --navy-800:#152c4a;
+    --navy-700:#1c3a5e;
+    --blue-accent:#1f4e8c;
+    --blue-accent-dark:#173c6c;
+    --gray-900:#1c2430;
+    --gray-700:#454f5c;
+    --gray-500:#6b7480;
+    --gray-200:#e3e7ec;
+    --gray-100:#f4f6f8;
+    --white:#ffffff;
+    --note-bg:#eef2f7;
+    --note-border:#8fa3bd;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:-apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic", "Meiryo", sans-serif;
+    color:var(--gray-900);
+    background:var(--white);
+    line-height:1.8;
+    -webkit-text-size-adjust:100%;
+  }
+  img,svg{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{margin:0;padding:0;list-style:none;}
+  h1,h2,h3,p{margin:0;}
+  section{padding:56px 20px;}
+  .container{max-width:1080px;margin:0 auto;}
+
+  /* 見出し共通 */
+  .section-label{
+    display:inline-block;
+    font-size:0.8rem;
+    letter-spacing:0.12em;
+    color:var(--blue-accent);
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .section-title{
+    font-size:1.5rem;
+    font-weight:700;
+    line-height:1.5;
+    color:var(--navy-900);
+    margin-bottom:20px;
+  }
+  .section-lead{
+    font-size:1rem;
+    color:var(--gray-700);
+    margin-bottom:28px;
+  }
+
+  /* ============================================
+     ヘッダー
+     ============================================ */
+  header.site-header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:var(--white);
+    border-bottom:1px solid var(--gray-200);
+  }
+  .header-inner{
+    max-width:1080px;
+    margin:0 auto;
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo{
+    font-size:1.05rem;
+    font-weight:700;
+    color:var(--navy-900);
+    letter-spacing:0.02em;
+  }
+  .logo .logo-sub{
+    display:block;
+    font-size:0.65rem;
+    font-weight:500;
+    color:var(--gray-500);
+    letter-spacing:0.08em;
+  }
+
+  /* ハンバーガーメニュー（モバイル） */
+  .nav-toggle{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:5px;
+    width:40px;
+    height:40px;
+    background:none;
+    border:1px solid var(--gray-200);
+    border-radius:6px;
+    cursor:pointer;
+  }
+  .nav-toggle span{
+    display:block;
+    width:20px;
+    height:2px;
+    background:var(--navy-900);
+    transition:transform .2s ease, opacity .2s ease;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;}
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  nav.main-nav{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--white);
+    border-bottom:1px solid var(--gray-200);
+    display:none;
+    flex-direction:column;
+    padding:8px 20px 16px;
+  }
+  nav.main-nav.is-open{display:flex;}
+  nav.main-nav a{
+    display:block;
+    padding:12px 4px;
+    font-size:0.95rem;
+    color:var(--gray-900);
+    border-bottom:1px solid var(--gray-100);
+  }
+  nav.main-nav a:last-child{border-bottom:none;}
+  .nav-cta{
+    margin-top:12px;
+  }
+  .nav-cta a{
+    display:block;
+    text-align:center;
+    background:var(--blue-accent);
+    color:var(--white)!important;
+    border-radius:6px;
+    padding:12px !important;
+    font-weight:700;
+  }
+
+  @media (min-width:768px){
+    .nav-toggle{display:none;}
+    nav.main-nav{
+      position:static;
+      display:flex;
+      flex-direction:row;
+      align-items:center;
+      border:none;
+      padding:0;
+      gap:6px;
+      width:auto;
+    }
+    nav.main-nav a{
+      border-bottom:none;
+      padding:8px 12px;
+      font-size:0.9rem;
+      white-space:nowrap;
+    }
+    .nav-cta{margin-top:0;margin-left:8px;}
+    .nav-cta a{padding:9px 16px !important;font-size:0.85rem;white-space:nowrap;}
+  }
+
+  /* ============================================
+     ボタン共通
+     ============================================ */
+  .btn-primary{
+    display:inline-block;
+    background:var(--blue-accent);
+    color:var(--white);
+    font-weight:700;
+    font-size:1rem;
+    padding:16px 28px;
+    border-radius:6px;
+    border:none;
+    cursor:pointer;
+    text-align:center;
+  }
+  .btn-primary:hover{background:var(--blue-accent-dark);}
+  .btn-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    color:var(--blue-accent);
+    font-weight:700;
+    font-size:0.95rem;
+    border-bottom:2px solid var(--blue-accent);
+    padding-bottom:2px;
+  }
+
+  /* 打消し表示・注記共通：本文と同等以上の視認性を確保する */
+  .note-box{
+    background:var(--note-bg);
+    border-left:4px solid var(--note-border);
+    color:var(--gray-900);
+    font-size:0.95rem;
+    line-height:1.7;
+    padding:14px 16px;
+    border-radius:4px;
+  }
+
+  /* ============================================
+     セクション1：ファーストビュー
+     ============================================ */
+  .hero{
+    background:linear-gradient(180deg, var(--navy-900) 0%, var(--navy-800) 100%);
+    color:var(--white);
+    padding:64px 20px 56px;
+  }
+  .hero .container{text-align:center;}
+  .hero h1{
+    font-size:1.7rem;
+    line-height:1.6;
+    font-weight:700;
+    margin-bottom:20px;
+  }
+  .hero p.sub{
+    font-size:1rem;
+    color:#d3dceb;
+    line-height:1.9;
+    margin-bottom:32px;
+    max-width:640px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .hero .btn-primary{
+    width:100%;
+    max-width:360px;
+  }
+  .hero .note-box{
+    margin-top:16px;
+    max-width:480px;
+    margin-left:auto;
+    margin-right:auto;
+    background:rgba(255,255,255,0.08);
+    border-left:4px solid #8fa3bd;
+    color:#e7ecf3;
+    text-align:left;
+  }
+
+  @media (min-width:768px){
+    .hero h1{font-size:2.2rem;}
+    .hero p.sub{font-size:1.05rem;}
+  }
+
+  /* ============================================
+     セクション2：課題提起
+     ============================================ */
+  .problem{background:var(--white);}
+  .problem .section-title{font-size:1.35rem;}
+  .problem p.body-text{
+    font-size:1rem;
+    color:var(--gray-700);
+    margin-bottom:16px;
+  }
+  .problem ul.check-list{
+    background:var(--gray-100);
+    border-radius:8px;
+    padding:20px;
+    margin:24px 0;
+  }
+  .problem ul.check-list li{
+    font-size:0.98rem;
+    color:var(--gray-900);
+    padding:8px 0 8px 26px;
+    position:relative;
+  }
+  .problem ul.check-list li::before{
+    content:"・";
+    position:absolute;
+    left:2px;
+    color:var(--blue-accent);
+    font-weight:700;
+  }
+  .problem p.closing{
+    font-size:1rem;
+    color:var(--gray-900);
+    font-weight:500;
+    margin-top:20px;
+  }
+
+  /* ============================================
+     セクション3：サービス4本柱
+     ============================================ */
+  .service{background:var(--gray-100);}
+  .service-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:16px;
+  }
+  .service-card{
+    background:var(--white);
+    border:1px solid var(--gray-200);
+    border-radius:10px;
+    padding:22px;
+  }
+  .service-card .num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    background:var(--navy-900);
+    color:var(--white);
+    font-size:0.85rem;
+    font-weight:700;
+    margin-bottom:12px;
+  }
+  .service-card h3{
+    font-size:1.08rem;
+    color:var(--navy-900);
+    margin-bottom:10px;
+    font-weight:700;
+  }
+  .service-card p{
+    font-size:0.95rem;
+    color:var(--gray-700);
+  }
+  @media (min-width:768px){
+    .service-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (min-width:1024px){
+    .service-grid{grid-template-columns:repeat(4,1fr);gap:20px;}
+  }
+
+  /* ============================================
+     セクション4：強み「コンプラ内蔵フロー」
+     ============================================ */
+  .strength{background:var(--navy-900);color:var(--white);}
+  .strength .section-label{color:#8fb0e0;}
+  .strength .section-title{color:var(--white);}
+  .flow-diagram-wrap{
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:10px;
+    padding:20px 16px;
+    margin:24px 0 28px;
+  }
+  .flow-diagram-label{
+    font-size:0.8rem;
+    letter-spacing:0.1em;
+    color:#8fb0e0;
+    font-weight:700;
+    margin-bottom:14px;
+  }
+  .flow-diagram{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+  .flow-diagram .step{
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.22);
+    border-radius:6px;
+    padding:12px 14px;
+    font-size:0.9rem;
+    font-weight:600;
+    text-align:center;
+  }
+  .flow-diagram .step.is-gate{
+    background:var(--blue-accent);
+    border-color:var(--blue-accent);
+  }
+  .flow-diagram .step.is-final{
+    background:rgba(255,255,255,0.18);
+  }
+  .flow-diagram .arrow{
+    text-align:center;
+    color:#8fb0e0;
+    font-size:1rem;
+    padding:4px 0;
+  }
+  @media (min-width:900px){
+    .flow-diagram{flex-direction:row;align-items:center;flex-wrap:wrap;}
+    .flow-diagram .step{flex:1 1 0;min-width:120px;}
+    .flow-diagram .arrow{padding:0 6px;}
+  }
+  .strength p.body-text{
+    font-size:1rem;
+    color:#d3dceb;
+    margin-bottom:16px;
+  }
+  .strength .note-box{
+    margin-top:20px;
+    background:rgba(255,255,255,0.08);
+    border-left:4px solid #8fb0e0;
+    color:#e7ecf3;
+  }
+
+  /* ============================================
+     セクション5：制作フロー／実績導線
+     ============================================ */
+  .flow-section{background:var(--white);}
+  .flow-steps{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+    margin:24px 0 8px;
+  }
+  .flow-steps .step-item{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    background:var(--gray-100);
+    border-radius:8px;
+    padding:16px;
+  }
+  .flow-steps .step-num{
+    flex:0 0 auto;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    background:var(--navy-900);
+    color:var(--white);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:0.95rem;
+  }
+  .flow-steps .step-num.is-gate{background:var(--blue-accent);}
+  .flow-steps .step-text{
+    font-size:0.98rem;
+    color:var(--gray-900);
+    padding-top:5px;
+    font-weight:500;
+  }
+  @media (min-width:768px){
+    .flow-steps{grid-template-columns:repeat(5,1fr);}
+    .flow-steps .step-item{flex-direction:column;text-align:center;align-items:center;}
+  }
+
+  .flow-section .note-box{margin:18px 0 40px;}
+
+  /* 実績エリア：2ブロックを視覚的に分離 */
+  .track-record{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+  @media (min-width:768px){
+    .track-record{grid-template-columns:1fr 1fr;}
+  }
+  .track-block{
+    border-radius:10px;
+    padding:24px;
+  }
+  .track-block.block-a{
+    background:var(--white);
+    border:2px solid var(--navy-900);
+  }
+  .track-block.block-a h3{
+    font-size:1.05rem;
+    color:var(--navy-900);
+    margin-bottom:14px;
+    font-weight:700;
+  }
+  .track-block.block-a ul li{
+    font-size:0.92rem;
+    color:var(--gray-700);
+    margin-bottom:12px;
+    line-height:1.7;
+  }
+  .track-block.block-a ul li strong{
+    color:var(--gray-900);
+    font-weight:700;
+  }
+  .track-block.block-b{
+    background:var(--gray-100);
+    border:2px dashed var(--gray-500);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+  }
+  .track-block.block-b p{
+    font-size:0.95rem;
+    color:var(--gray-700);
+    line-height:1.9;
+  }
+
+  /* ============================================
+     セクション6：会社概要導線
+     ============================================ */
+  .company-lead{background:var(--gray-100);}
+  .company-lead p.body-text{
+    font-size:1rem;
+    color:var(--gray-700);
+    margin-bottom:22px;
+  }
+
+  /* ============================================
+     セクション7：最終CTA（セクション2と呼応するブックエンド）
+     ============================================ */
+  .cta-final{
+    background:linear-gradient(180deg, var(--navy-800) 0%, var(--navy-900) 100%);
+    color:var(--white);
+    text-align:center;
+  }
+  .cta-final .section-title{
+    color:var(--white);
+    font-size:1.3rem;
+  }
+  .cta-final p.body-text{
+    font-size:1rem;
+    color:#d3dceb;
+    margin-bottom:28px;
+  }
+  .cta-final .btn-primary{
+    width:100%;
+    max-width:360px;
+  }
+  .cta-final .note-box{
+    margin-top:16px;
+    max-width:480px;
+    margin-left:auto;
+    margin-right:auto;
+    background:rgba(255,255,255,0.08);
+    border-left:4px solid #8fa3bd;
+    color:#e7ecf3;
+    text-align:left;
+  }
+
+  /* ============================================
+     お問い合わせフォーム
+     ============================================ */
+  .contact-section{background:var(--white);}
+  .contact-form{
+    background:var(--gray-100);
+    border-radius:10px;
+    padding:24px 20px;
+    max-width:640px;
+    margin:0 auto;
+  }
+  .form-row{margin-bottom:18px;}
+  .form-row label{
+    display:block;
+    font-size:0.92rem;
+    font-weight:700;
+    color:var(--gray-900);
+    margin-bottom:6px;
+  }
+  .form-row .required{
+    color:var(--blue-accent-dark);
+    font-size:0.8rem;
+    margin-left:6px;
+    font-weight:700;
+  }
+  .form-row input,
+  .form-row textarea{
+    width:100%;
+    padding:12px;
+    font-size:0.95rem;
+    border:1px solid var(--gray-200);
+    border-radius:6px;
+    font-family:inherit;
+    background:var(--white);
+  }
+  .form-row textarea{min-height:120px;resize:vertical;}
+  .contact-form .btn-primary{width:100%;margin-top:6px;}
+  .form-disclaimer{
+    font-size:0.9rem;
+    color:var(--gray-700);
+    margin-top:14px;
+    line-height:1.7;
+  }
+  #form-result{
+    margin-top:16px;
+    font-size:0.95rem;
+    font-weight:700;
+    color:var(--blue-accent-dark);
+    display:none;
+  }
+
+  /* ============================================
+     フッター（共通パーツ：常時視認可能な表示）
+     ============================================ */
+  footer.site-footer{
+    background:var(--navy-900);
+    color:#c9d2de;
+    padding:36px 20px 24px;
+  }
+  footer.site-footer .footer-logo{
+    color:var(--white);
+    font-weight:700;
+    font-size:1.05rem;
+    margin-bottom:16px;
+  }
+  footer.site-footer nav.footer-nav{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 18px;
+    margin-bottom:20px;
+  }
+  footer.site-footer nav.footer-nav a{
+    font-size:0.88rem;
+    color:#c9d2de;
+  }
+  /* 登録番号・自主規制団体名の表示枠（内容は未確定のため今後差し替え） */
+  .footer-legal-frame{
+    border:1px solid rgba(255,255,255,0.25);
+    border-radius:8px;
+    padding:14px 16px;
+    margin-bottom:20px;
+    background:rgba(255,255,255,0.04);
+  }
+  .footer-legal-frame .legal-label{
+    font-size:0.8rem;
+    font-weight:700;
+    color:#8fb0e0;
+    letter-spacing:0.06em;
+    margin-bottom:6px;
+  }
+  .footer-legal-frame p{
+    font-size:0.85rem;
+    line-height:1.7;
+    color:#c9d2de;
+  }
+  footer.site-footer .footer-notice{
+    font-size:0.85rem;
+    line-height:1.8;
+    color:#c9d2de;
+    border-top:1px solid rgba(255,255,255,0.15);
+    padding-top:16px;
+    margin-bottom:10px;
+  }
+  footer.site-footer .copyright{
+    font-size:0.8rem;
+    color:#8894a3;
+  }
+
+  @media (min-width:768px){
+    section{padding:80px 20px;}
+    .section-title{font-size:1.9rem;}
+    .container{padding:0 20px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     ヘッダー：社名はプレースホルダー。ナビはページ内アンカー。
+     ============================================ -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">（社名）
+      <span class="logo-sub">FINANCIAL MARKETING AGENCY</span>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="メニューを開く">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="main-nav" id="mainNav">
+      <a href="service.html">サービス</a>
+      <a href="strength.html">強み</a>
+      <a href="flow.html">制作フロー</a>
+      <a href="company.html">会社概要</a>
+      <a href="contact.html">お問い合わせ</a>
+      <div class="nav-cta"><a href="contact.html">お問い合わせ・ご相談はこちら</a></div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============================================
+       セクション1：ファーストビュー
+       ============================================ -->
+  <section class="hero" id="fv">
+    <div class="container">
+      <h1>攻める金融マーケティングを、守りの設計から。</h1>
+      <p class="sub">金融事業者専門のマーケティング代理店。戦略・インフルエンサー施策・LP制作・ライティングを、コンプライアンスチェックを制作工程に組み込んだ体制で提供します。</p>
+      <a href="#contact" class="btn-primary">お問い合わせ・ご相談はこちら</a>
+      <div class="note-box">※ まずは現状のマーケティング課題やコンプラ体制についてのご相談から承ります。</div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       セクション2：課題提起
+       ============================================ -->
+  <section class="problem" id="problem">
+    <div class="container">
+      <p class="section-label">PROBLEM</p>
+      <h2 class="section-title">「攻めたいけど、事故れない。」金融マーケの現場が抱えるジレンマ。</h2>
+      <p class="body-text">訴求を強くすれば規制リスクが増える。規制を意識しすぎれば、コピーは無難で刺さらなくなる。</p>
+      <p class="body-text">景品表示法、金融商品取引法、FFAJ（金融先物取引業協会）の自主規制ガイドライン──。金融領域のマーケティングには、他業界にはないチェック項目が数多く存在します。</p>
+      <ul class="check-list">
+        <li>インフルエンサー施策で、断定的な利益表現が紛れ込んでいないか</li>
+        <li>LPのコピーが、元本保証を思わせる表現になっていないか</li>
+        <li>スピード重視の制作フローの中で、法務レビューが後回しになっていないか</li>
+      </ul>
+      <p class="closing">こうした不安を抱えながら制作を進めている金融事業者のマーケティング担当者・経営層・法務/コンプライアンス部門の方に向けて、私たちは事業を行っています。</p>
+    </div>
+  </section>
+
+  <!-- ============================================
+       セクション3：サービス4本柱
+       ============================================ -->
+  <section class="service" id="service">
+    <div class="container">
+      <p class="section-label">SERVICE</p>
+      <h2 class="section-title">金融マーケティングを、4つの機能で支援します。</h2>
+      <div class="service-grid">
+        <div class="service-card">
+          <div class="num">1</div>
+          <h3>マーケティング戦略</h3>
+          <p>ターゲット設計と訴求方針の立案。攻めどころと守りどころを最初に整理します。</p>
+        </div>
+        <div class="service-card">
+          <div class="num">2</div>
+          <h3>インフルエンサー施策</h3>
+          <p>設計から運用まで。#PR表記や訴求表現の確認を前提に組み立てます。</p>
+        </div>
+        <div class="service-card">
+          <div class="num">3</div>
+          <h3>LP制作</h3>
+          <p>構成・コピーからコーディングまで一気通貫。コンプラ担当の必須レビューを経て納品します。</p>
+        </div>
+        <div class="service-card">
+          <div class="num">4</div>
+          <h3>ライティング</h3>
+          <p>LPコピー、SNS投稿文、インフルエンサー向け投稿案の作成。断定表現・元本保証を想起させる表現を用いない書き方を基本とします。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       セクション4：強み「コンプラ内蔵フロー」
+       ============================================ -->
+  <section class="strength" id="strength">
+    <div class="container">
+      <p class="section-label">STRENGTH</p>
+      <h2 class="section-title">「コンプラ内蔵フロー」── コンプラを、後工程のチェックではなく制作工程そのものに組み込む仕組み。</h2>
+
+      <div class="flow-diagram-wrap">
+        <p class="flow-diagram-label">［コンプラ内蔵フロー］</p>
+        <div class="flow-diagram">
+          <div class="step">社長（YUKI）</div>
+          <div class="arrow">↓</div>
+          <div class="step">PM</div>
+          <div class="arrow">↓</div>
+          <div class="step">戦略担当</div>
+          <div class="arrow">↓</div>
+          <div class="step">ライター／コーダー</div>
+          <div class="arrow">↓</div>
+          <div class="step is-gate">コンプラ担当（必須チェック）</div>
+          <div class="arrow">↓</div>
+          <div class="step is-final">社長（YUKI）が最終決裁</div>
+        </div>
+      </div>
+
+      <p class="body-text">ポイントは、コンプラ担当のチェックを経ていない成果物は「完成」として扱わない、という点です。LP・コピー・戦略資料など、外部に出る可能性のある成果物はすべて、コンプラ担当のレビューを必須のゲートとして通過してから、最終的に社長（YUKI）が決裁します。</p>
+      <p class="body-text">属人的な「気をつける」ではなく、断定的な利益予測表現や元本保証を想起させる表現を残さないことを目指し、レビューを必須工程として制作フローに組み込んでいます。</p>
+
+      <div class="note-box">社長のYUKIは金融マーケティングの実務者として、景品表示法・金融商品取引法・FFAJ自主規制ガイドラインの知識をもとに、最終決裁を行っています。</div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       セクション5：制作フロー／実績導線
+       ============================================ -->
+  <section class="flow-section" id="flow">
+    <div class="container">
+      <p class="section-label">FLOW</p>
+      <h2 class="section-title">ご依頼から納品までの流れ</h2>
+
+      <div class="flow-steps">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-text">お問い合わせ・ヒアリング</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-text">戦略設計のご提案</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-text">制作（LP／コピー／インフルエンサー施策）</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num is-gate">4</div>
+          <div class="step-text">コンプラ担当による必須チェック</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-text">貴社ご確認・最終納品</div>
+        </div>
+      </div>
+      <div class="note-box">※ 案件内容により、一部工程が前後する場合があります。</div>
+
+      <!-- 実績エリア：2ブロックを視覚的に分離。架空の実績数値・お客様の声・ロゴは一切掲載しない -->
+      <div class="track-record" style="margin-top:40px;">
+        <div class="track-block block-a">
+          <h3>対応領域・専門性</h3>
+          <ul>
+            <li><strong>対応領域：</strong>FX・投資信託等、金融事業者向けのマーケティング支援</li>
+            <li><strong>対応知見：</strong>景品表示法・金融商品取引法・FFAJ（金融先物取引業協会）自主規制ガイドラインを踏まえた制作体制</li>
+            <li><strong>制作体制：</strong>戦略・インフルエンサー施策・LP制作・ライティングを、コンプラ内蔵フローで一気通貫で対応できる体制</li>
+          </ul>
+        </div>
+        <div class="track-block block-b">
+          <p>導入社数・お客様の声・具体的な事例につきましては、現在準備中です。順次公開予定です。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       セクション6：会社概要導線
+       ============================================ -->
+  <section class="company-lead" id="company">
+    <div class="container">
+      <p class="section-label">COMPANY</p>
+      <h2 class="section-title">運営会社について</h2>
+      <p class="body-text">本サービスは、金融マーケティングの実務経験を持つYUKIが代表を務めています。景品表示法・金融商品取引法・FFAJ自主規制ガイドラインに関する知識をもとに、金融事業者向けのマーケティング支援を専門に行っています。</p>
+      <a href="company.html" class="btn-link">会社概要を見る →</a>
+    </div>
+  </section>
+
+  <!-- ============================================
+       セクション7：最終CTA（セクション2の課題提起と呼応するブックエンド構成）
+       ============================================ -->
+  <section class="cta-final" id="cta-final">
+    <div class="container">
+      <h2 class="section-title">攻めたい。でも、事故れない。──その両立に、コンプラ内蔵フローという体制で向き合います。</h2>
+      <p class="body-text">貴社のマーケティング課題、コンプラ体制のお悩みについて、まずはお気軽にご相談ください。</p>
+      <a href="#contact" class="btn-primary">お問い合わせ・ご相談はこちら</a>
+      <div class="note-box">※ まずは現状のマーケティング課題やコンプラ体制についてのご相談から承ります。</div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       お問い合わせフォーム枠
+       ============================================ -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <p class="section-label">CONTACT</p>
+      <h2 class="section-title">お問い合わせ・ご相談</h2>
+      <p class="section-lead">貴社のマーケティング課題、コンプラ体制のお悩みについて、まずはお気軽にご相談ください。</p>
+
+      <form class="contact-form" id="contactForm">
+        <div class="form-row">
+          <label for="companyName">会社名<span class="required">必須</span></label>
+          <input type="text" id="companyName" name="companyName" required>
+        </div>
+        <div class="form-row">
+          <label for="personName">ご担当者名<span class="required">必須</span></label>
+          <input type="text" id="personName" name="personName" required>
+        </div>
+        <div class="form-row">
+          <label for="email">メールアドレス<span class="required">必須</span></label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-row">
+          <label for="message">お問い合わせ内容<span class="required">必須</span></label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button type="submit" class="btn-primary">送信する</button>
+        <p class="form-disclaimer">※ 本フォームは制作テスト用のサンプルです（サンプル・送信不可）。送信処理は実装されておらず、実際のお問い合わせは受け付けておりません。</p>
+        <p id="form-result">ご送信内容を受け付けました（※デモ表示です。実際には送信されていません）。</p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================
+     フッター（共通パーツ：リスク・法令関連表示は常時視認可能な位置に配置）
+     ============================================ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-logo">（社名）</div>
+
+    <nav class="footer-nav">
+      <a href="service.html">サービス</a>
+      <a href="strength.html">強み</a>
+      <a href="flow.html">制作フロー</a>
+      <a href="company.html">会社概要</a>
+      <a href="contact.html">お問い合わせ</a>
+    </nav>
+
+    <p class="footer-notice"><strong>本サイトは制作テスト用のサンプルです。実在の事業・サービスではありません。</strong><br>本サイトは制作中です。掲載内容は今後変更される場合があります。</p>
+
+    <p class="copyright">© （社名） All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  // ハンバーガーメニューの開閉制御（外部ライブラリ不使用の素のJavaScript）
+  (function () {
+    var toggleBtn = document.getElementById('navToggle');
+    var nav = document.getElementById('mainNav');
+
+    toggleBtn.addEventListener('click', function () {
+      var isOpen = nav.classList.toggle('is-open');
+      toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      toggleBtn.setAttribute('aria-label', isOpen ? 'メニューを閉じる' : 'メニューを開く');
+    });
+
+    // ナビ内リンクをクリックしたらメニューを閉じる（モバイル時）
+    nav.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        nav.classList.remove('is-open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+
+  // お問い合わせフォームのデモ送信処理
+  // 注：外部送信は一切行わない（file://で完結する静的ページのため）
+  (function () {
+    var form = document.getElementById('contactForm');
+    var result = document.getElementById('form-result');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      result.style.display = 'block';
+      form.reset();
+    });
+  })();
+</script>
+
+</body>
+</html>

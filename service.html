@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>サービス｜（社名）── 金融特化型マーケティング代理店</title>
+<meta name="description" content="金融事業者向けにマーケティング戦略、インフルエンサー施策、LP制作、ライティングを提供。いずれのサービスも、コンプラ担当による必須チェックを経てからお渡しする「コンプラ内蔵フロー」の対象です。">
+<style>
+  /* ============================================
+     基本設定：index.html のデザイントークンをそのまま継承
+     （カラーパレット・フォント指定・共通クラスは index.html と同一にする）
+     ============================================ */
+  :root{
+    /* カラー：ネイビー/グレー基調＋抑えたディープブルーの差し色（index.html と同一） */
+    --navy-900:#0f2038;
+    --navy-800:#152c4a;
+    --navy-700:#1c3a5e;
+    --blue-accent:#1f4e8c;
+    --blue-accent-dark:#173c6c;
+    --gray-900:#1c2430;
+    --gray-700:#454f5c;
+    --gray-500:#6b7480;
+    --gray-200:#e3e7ec;
+    --gray-100:#f4f6f8;
+    --white:#ffffff;
+    --note-bg:#eef2f7;
+    --note-border:#8fa3bd;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:-apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic", "Meiryo", sans-serif;
+    color:var(--gray-900);
+    background:var(--white);
+    line-height:1.8;
+    -webkit-text-size-adjust:100%;
+  }
+  img,svg{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{margin:0;padding:0;list-style:none;}
+  h1,h2,h3,p{margin:0;}
+  section{padding:56px 20px;}
+  .container{max-width:1080px;margin:0 auto;}
+
+  /* 背景色の切り替え用（index.html のセクション配色と同じトーンで交互に使用） */
+  .bg-white{background:var(--white);}
+  .bg-gray{background:var(--gray-100);}
+
+  /* 見出し共通（index.html と同一） */
+  .section-label{
+    display:inline-block;
+    font-size:0.8rem;
+    letter-spacing:0.12em;
+    color:var(--blue-accent);
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .section-title{
+    font-size:1.5rem;
+    font-weight:700;
+    line-height:1.5;
+    color:var(--navy-900);
+    margin-bottom:20px;
+  }
+  .section-lead{
+    font-size:1rem;
+    color:var(--gray-700);
+    margin-bottom:28px;
+  }
+
+  /* ============================================
+     ヘッダー（index.html と同一デザイン）
+     ============================================ */
+  header.site-header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:var(--white);
+    border-bottom:1px solid var(--gray-200);
+  }
+  .header-inner{
+    max-width:1080px;
+    margin:0 auto;
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo{
+    font-size:1.05rem;
+    font-weight:700;
+    color:var(--navy-900);
+    letter-spacing:0.02em;
+  }
+  .logo .logo-sub{
+    display:block;
+    font-size:0.65rem;
+    font-weight:500;
+    color:var(--gray-500);
+    letter-spacing:0.08em;
+  }
+
+  /* ハンバーガーメニュー（モバイル） */
+  .nav-toggle{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:5px;
+    width:40px;
+    height:40px;
+    background:none;
+    border:1px solid var(--gray-200);
+    border-radius:6px;
+    cursor:pointer;
+  }
+  .nav-toggle span{
+    display:block;
+    width:20px;
+    height:2px;
+    background:var(--navy-900);
+    transition:transform .2s ease, opacity .2s ease;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;}
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  nav.main-nav{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--white);
+    border-bottom:1px solid var(--gray-200);
+    display:none;
+    flex-direction:column;
+    padding:8px 20px 16px;
+  }
+  nav.main-nav.is-open{display:flex;}
+  nav.main-nav a{
+    display:block;
+    padding:12px 4px;
+    font-size:0.95rem;
+    color:var(--gray-900);
+    border-bottom:1px solid var(--gray-100);
+  }
+  nav.main-nav a:last-child{border-bottom:none;}
+  /* 現在ページ（サービス）を示す表示 */
+  nav.main-nav a.is-current,
+  footer.site-footer nav.footer-nav a.is-current{
+    color:var(--blue-accent);
+    font-weight:700;
+  }
+  .nav-cta{
+    margin-top:12px;
+  }
+  .nav-cta a{
+    display:block;
+    text-align:center;
+    background:var(--blue-accent);
+    color:var(--white)!important;
+    border-radius:6px;
+    padding:12px !important;
+    font-weight:700;
+  }
+
+  @media (min-width:768px){
+    .nav-toggle{display:none;}
+    nav.main-nav{
+      position:static;
+      display:flex;
+      flex-direction:row;
+      align-items:center;
+      border:none;
+      padding:0;
+      gap:6px;
+      width:auto;
+    }
+    nav.main-nav a{
+      border-bottom:none;
+      padding:8px 12px;
+      font-size:0.9rem;
+      white-space:nowrap;
+    }
+    .nav-cta{margin-top:0;margin-left:8px;}
+    .nav-cta a{padding:9px 16px !important;font-size:0.85rem;white-space:nowrap;}
+  }
+
+  /* ============================================
+     ボタン共通（index.html と同一）
+     ============================================ */
+  .btn-primary{
+    display:inline-block;
+    background:var(--blue-accent);
+    color:var(--white);
+    font-weight:700;
+    font-size:1rem;
+    padding:16px 28px;
+    border-radius:6px;
+    border:none;
+    cursor:pointer;
+    text-align:center;
+  }
+  .btn-primary:hover{background:var(--blue-accent-dark);}
+  .btn-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    color:var(--blue-accent);
+    font-weight:700;
+    font-size:0.95rem;
+    border-bottom:2px solid var(--blue-accent);
+    padding-bottom:2px;
+  }
+
+  /* 打消し表示・注記共通：本文と同等以上の視認性を確保する（index.html と同一） */
+  .note-box{
+    background:var(--note-bg);
+    border-left:4px solid var(--note-border);
+    color:var(--gray-900);
+    font-size:0.95rem;
+    line-height:1.7;
+    padding:14px 16px;
+    border-radius:4px;
+  }
+  .note-box p:not(:first-child){margin-top:8px;}
+
+  /* ============================================
+     ページヘッダー（hero相当・ネイビー背景。index.html の .hero を流用）
+     ============================================ */
+  .hero{
+    background:linear-gradient(180deg, var(--navy-900) 0%, var(--navy-800) 100%);
+    color:var(--white);
+    padding:64px 20px 56px;
+  }
+  .hero .container{text-align:center;}
+  .hero h1{
+    font-size:1.6rem;
+    line-height:1.6;
+    font-weight:700;
+    margin-bottom:20px;
+  }
+  .hero p.sub{
+    font-size:1rem;
+    color:#d3dceb;
+    line-height:1.9;
+    max-width:640px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  @media (min-width:768px){
+    .hero h1{font-size:2.1rem;}
+    .hero p.sub{font-size:1.05rem;}
+  }
+
+  /* ============================================
+     サービス詳細セクション共通（各サービスの本文ブロック）
+     ============================================ */
+  .service-detail p.body-text{
+    font-size:1rem;
+    color:var(--gray-700);
+    margin-bottom:16px;
+  }
+  .service-detail-blocks{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    margin-top:24px;
+  }
+  /* ブロック見出し（【こんな課題の方へ】等）：本文と同等以上の視認性を確保 */
+  .block-label{
+    font-size:1.05rem;
+    font-weight:700;
+    color:var(--navy-900);
+    margin-bottom:12px;
+  }
+  /* index.html の .service-card を流用（カード枠のデザインを継承） */
+  .service-card{
+    background:var(--white);
+    border:1px solid var(--gray-200);
+    border-radius:10px;
+    padding:22px;
+  }
+  .service-card > p.body-text{
+    margin-top:14px;
+    margin-bottom:0;
+  }
+  .service-card > p.body-text:not(:last-child){margin-bottom:14px;}
+
+  /* index.html の .problem ul.check-list を汎用化して流用 */
+  .check-list{
+    background:var(--gray-100);
+    border-radius:8px;
+    padding:20px;
+  }
+  .check-list li{
+    font-size:0.98rem;
+    color:var(--gray-900);
+    padding:8px 0 8px 26px;
+    position:relative;
+  }
+  .check-list li::before{
+    content:"・";
+    position:absolute;
+    left:2px;
+    color:var(--blue-accent);
+    font-weight:700;
+  }
+  /* インフルエンサー施策セクション：効果非保証の注記は本文と同等以上の視認性で（.note-box） */
+  .service-detail .service-card .note-box{margin-top:14px;}
+
+  /* ============================================
+     共通の進め方セクション（index.html の .strength を流用）
+     ============================================ */
+  .strength{background:var(--navy-900);color:var(--white);}
+  .strength .section-label{color:#8fb0e0;}
+  .strength .section-title{color:var(--white);}
+  .flow-diagram-wrap{
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:10px;
+    padding:20px 16px;
+    margin:24px 0 28px;
+  }
+  .flow-diagram-label{
+    font-size:0.8rem;
+    letter-spacing:0.1em;
+    color:#8fb0e0;
+    font-weight:700;
+    margin-bottom:14px;
+  }
+  .flow-diagram{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+  .flow-diagram .step{
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.22);
+    border-radius:6px;
+    padding:12px 14px;
+    font-size:0.9rem;
+    font-weight:600;
+    text-align:center;
+  }
+  .flow-diagram .step.is-gate{
+    background:var(--blue-accent);
+    border-color:var(--blue-accent);
+  }
+  .flow-diagram .step.is-final{
+    background:rgba(255,255,255,0.18);
+  }
+  .flow-diagram .arrow{
+    text-align:center;
+    color:#8fb0e0;
+    font-size:1rem;
+    padding:4px 0;
+  }
+  @media (min-width:900px){
+    .flow-diagram{flex-direction:row;align-items:center;flex-wrap:wrap;}
+    .flow-diagram .step{flex:1 1 0;min-width:120px;}
+    .flow-diagram .arrow{padding:0 6px;}
+  }
+  .strength p.body-text{
+    font-size:1rem;
+    color:#d3dceb;
+    margin-bottom:16px;
+  }
+  .strength .note-box{
+    margin-top:20px;
+    background:rgba(255,255,255,0.08);
+    border-left:4px solid #8fb0e0;
+    color:#e7ecf3;
+  }
+
+  /* index.html の .flow-steps を流用（5ステップ） */
+  .flow-steps{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+    margin:8px 0 8px;
+  }
+  .flow-steps .step-item{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    background:var(--gray-100);
+    border-radius:8px;
+    padding:16px;
+  }
+  .flow-steps .step-num{
+    flex:0 0 auto;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    background:var(--navy-900);
+    color:var(--white);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:0.95rem;
+  }
+  .flow-steps .step-num.is-gate{background:var(--blue-accent);}
+  .flow-steps .step-text{
+    font-size:0.98rem;
+    color:var(--gray-900);
+    padding-top:5px;
+    font-weight:500;
+  }
+  @media (min-width:768px){
+    .flow-steps{grid-template-columns:repeat(5,1fr);}
+    .flow-steps .step-item{flex-direction:column;text-align:center;align-items:center;}
+  }
+
+  /* ============================================
+     最終CTA（index.html の .cta-final を流用）
+     ============================================ */
+  .cta-final{
+    background:linear-gradient(180deg, var(--navy-800) 0%, var(--navy-900) 100%);
+    color:var(--white);
+    text-align:center;
+  }
+  .cta-final .section-title{
+    color:var(--white);
+    font-size:1.3rem;
+  }
+  .cta-final p.body-text{
+    font-size:1rem;
+    color:#d3dceb;
+    margin-bottom:20px;
+  }
+  .cta-final p.body-text:last-of-type{margin-bottom:28px;}
+  .cta-final .btn-primary{
+    width:100%;
+    max-width:360px;
+  }
+  .cta-final .note-box{
+    margin-top:16px;
+    max-width:480px;
+    margin-left:auto;
+    margin-right:auto;
+    background:rgba(255,255,255,0.08);
+    border-left:4px solid #8fa3bd;
+    color:#e7ecf3;
+    text-align:left;
+  }
+
+  /* ============================================
+     フッター（共通パーツ：index.html と同一。常時視認可能な表示）
+     ============================================ */
+  footer.site-footer{
+    background:var(--navy-900);
+    color:#c9d2de;
+    padding:36px 20px 24px;
+  }
+  footer.site-footer .footer-logo{
+    color:var(--white);
+    font-weight:700;
+    font-size:1.05rem;
+    margin-bottom:16px;
+  }
+  footer.site-footer nav.footer-nav{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 18px;
+    margin-bottom:20px;
+  }
+  footer.site-footer nav.footer-nav a{
+    font-size:0.88rem;
+    color:#c9d2de;
+  }
+  footer.site-footer .footer-notice{
+    font-size:0.85rem;
+    line-height:1.8;
+    color:#c9d2de;
+    border-top:1px solid rgba(255,255,255,0.15);
+    padding-top:16px;
+    margin-bottom:10px;
+  }
+  footer.site-footer .copyright{
+    font-size:0.8rem;
+    color:#8894a3;
+  }
+
+  @media (min-width:768px){
+    section{padding:80px 20px;}
+    .section-title{font-size:1.9rem;}
+    .container{padding:0 20px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     ヘッダー：index.html と同一デザイン。
+     「サービス」は本ページ自身のため現在ページ表示（自己リンク＋強調）とする。
+     他のナビ・nav-cta は index.html 側のアンカーへ遷移する。
+     ============================================ -->
+<header class="site-header">
+  <div class="header-inner">
+    <a class="logo" href="index.html">（社名）
+      <span class="logo-sub">FINANCIAL MARKETING AGENCY</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="メニューを開く">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="main-nav" id="mainNav">
+      <a href="service.html" class="is-current" aria-current="page">サービス</a>
+      <a href="strength.html">強み</a>
+      <a href="flow.html">制作フロー</a>
+      <a href="company.html">会社概要</a>
+      <a href="contact.html">お問い合わせ</a>
+      <div class="nav-cta"><a href="contact.html">お問い合わせ・ご相談はこちら</a></div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============================================
+       ページヘッダー（hero相当・ネイビー背景）
+       ============================================ -->
+  <section class="hero" id="top">
+    <div class="container">
+      <h1>4つのサービス、すべてに「コンプラ内蔵フロー」を通しています。</h1>
+      <p class="sub">マーケティング戦略、インフルエンサー施策、LP制作、ライティング。金融事業者向けにこの4つを提供しています。単体でのご依頼も、組み合わせてのご依頼も可能です。いずれのサービスも、コンプラ担当による必須チェックを経てからお渡しする「コンプラ内蔵フロー」の対象です。</p>
+    </div>
+  </section>
+
+  <!-- ============================================
+       サービス1：マーケティング戦略
+       ============================================ -->
+  <section class="service-detail bg-white" id="strategy">
+    <div class="container">
+      <p class="section-label">SERVICE 01</p>
+      <h2 class="section-title">マーケティング戦略 ── 攻めどころと守りどころを、最初に整理する。</h2>
+
+      <div class="service-detail-blocks">
+        <div class="service-card">
+          <p class="block-label">【こんな課題の方へ】</p>
+          <ul class="check-list">
+            <li>ターゲットや訴求軸が定まらないまま、コピーや施策の制作を先に進めてしまっている</li>
+            <li>訴求を強めたい気持ちはあるが、どこまでが許容範囲か判断がつかない</li>
+            <li>戦略設計とコンプラ確認が別々の担当・タイミングで動いていて、後工程で手戻りが発生している</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <p class="block-label">【提供内容】</p>
+          <ul class="check-list">
+            <li>ターゲット設計（誰に向けた訴求かの整理）</li>
+            <li>訴求方針の立案（何を、どう伝えるかの方針）</li>
+            <li>攻めどころと守りどころの整理（表現の強弱をどこで作り、どこで抑えるかの整理）</li>
+          </ul>
+          <p class="body-text">戦略担当が上記を成果物としてお渡しします。具体的な資料の形式・粒度は、案件内容に応じてご相談のうえ決定します。</p>
+        </div>
+
+        <div class="service-card">
+          <p class="block-label">【進め方】</p>
+          <ul class="check-list">
+            <li>立案した訴求方針は、「なぜその表現を選んだか」という採用理由まで明文化してライター・コーダーに引き継ぎます。理由が言語化されていないと、後工程で同じ議論を繰り返すことになるためです。</li>
+            <li>攻めどころと守りどころの線引きは、後から足すのではなく、最初の設計段階の前提として組み込みます。</li>
+            <li>戦略段階でも、断定的な利益予測や元本保証を想起させる訴求方針は採用しません。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       サービス2：インフルエンサー施策
+       ============================================ -->
+  <section class="service-detail bg-gray" id="influencer">
+    <div class="container">
+      <p class="section-label">SERVICE 02</p>
+      <h2 class="section-title">インフルエンサー施策 ── 刺さる起用ほど、あとで「事故」になりやすい。だから、設計段階で両方を詰める。</h2>
+
+      <div class="service-detail-blocks">
+        <div class="service-card">
+          <p class="block-label">【こんな課題の方へ】</p>
+          <ul class="check-list">
+            <li>インフルエンサーへの依頼を検討しているが、起用基準や投稿内容の確認プロセスがない</li>
+            <li>#PR表記の運用が担当者の裁量に委ねられており、社内で基準化できていない</li>
+            <li>投稿内容が断定的な利益表現になっていないか、依頼のたびに不安になる</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <p class="block-label">【提供内容】</p>
+          <ul class="check-list">
+            <li>施策設計（目的・ターゲットの整理、起用方針の策定）</li>
+            <li>キャスティング条件の設計（起用基準、#PR表記のルール、投稿内容の事前確認プロセスの設計）</li>
+            <li>投稿文面・投稿案の作成（ライティング担当と連携して作成）</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <p class="block-label">【進め方】</p>
+          <ul class="check-list">
+            <li>起用が決まってから表記ルールを考えるのではなく、企画の時点で#PR表記の運用ルール（誰が・いつ・どう表記するか）を固定します。投稿直前に慌てて調整する事態を避けるためです。</li>
+            <li>景品表示法上のステルスマーケティング規制を踏まえた表現の基準は、キャスティング条件そのものに組み込んでおきます。</li>
+          </ul>
+          <!-- 効果非保証の注記：本文と同等以上の視認性を確保するため .note-box（14px前後の本文相当サイズ・高コントラスト配色）で常時表示 -->
+          <div class="note-box">インフルエンサー施策の効果・反響を保証するものではありません。効果には媒体・タイミング・起用者ごとの差があります。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       サービス3：LP制作
+       ============================================ -->
+  <section class="service-detail bg-white" id="lp">
+    <div class="container">
+      <p class="section-label">SERVICE 03</p>
+      <h2 class="section-title">LP制作 ── 打消し表示は、実装で「削られる」側にしない。構成からコーディングまで、分業させない理由。</h2>
+
+      <div class="service-detail-blocks">
+        <div class="service-card">
+          <p class="block-label">【こんな課題の方へ】</p>
+          <ul class="check-list">
+            <li>打消し表示（注意書き）が、実装の段階でデザイン上小さくなってしまう</li>
+            <li>LPの構成・コピーとコーディングを別会社に発注しており、意図がずれることがある</li>
+            <li>公開直前にコンプラ指摘が入り、スケジュールが崩れることが多い</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <p class="block-label">【提供内容】</p>
+          <p class="body-text">LP構成案の設計から見出し・本文コピー、コーディングまでを、分業させず一気通貫で同じチームが担当します。</p>
+          <ul class="check-list">
+            <li>LP構成案の設計（ファーストビュー・課題提起・解決・CTAなどの流れの設計）</li>
+            <li>見出し・本文コピーのライティング</li>
+            <li>コーディング（実装）</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <p class="block-label">【進め方】</p>
+          <ul class="check-list">
+            <li>打消し表示・注記は、実装の都合で後回しにされ、気づけば小さく・薄くなりがちな要素です。構成設計の段階で注記の配置とサイズを本文と同時に確定してから、コーディングに入ることで、これを防ぎます。</li>
+            <li>その配置・サイズが本文と同等以上の視認性を確保できているかは、実装後にコンプラ担当が確認したうえで納品します。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       サービス4：ライティング
+       ============================================ -->
+  <section class="service-detail bg-gray" id="writing">
+    <div class="container">
+      <p class="section-label">SERVICE 04</p>
+      <h2 class="section-title">ライティング ── 断定表現を使わずに、伝わるコピーを書く。</h2>
+
+      <div class="service-detail-blocks">
+        <div class="service-card">
+          <p class="block-label">【こんな課題の方へ】</p>
+          <ul class="check-list">
+            <li>LPコピーやSNS投稿文が断定的な利益表現に寄りがちで、都度の修正が発生している</li>
+            <li>LP・SNS・インフルエンサー投稿など、媒体ごとに表現のトーンがバラついている</li>
+            <li>リスク表示・注記をどこに、どう入れるべきか、社内に判断基準がない</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <p class="block-label">【提供内容】</p>
+          <ul class="check-list">
+            <li>LPの見出し・本文コピー</li>
+            <li>SNS投稿文</li>
+            <li>インフルエンサー向け投稿案</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <p class="block-label">【進め方】</p>
+          <ul class="check-list">
+            <li>利益・実績に触れる文章と、それに対応するリスク・注意書きは、「書き終えてからあとで足す」のではなく、同じ工程で同時に書きます。あとから足す形だと、注記が申し訳程度になりやすいためです。</li>
+            <li>断定的な利益予測（例：「必ず儲かる」）や、元本保証を想起させる表現は、書く段階から使用しません。</li>
+            <li>根拠のない優位性表現（例：出典のない「No.1」表記）ではなく、出典・条件のわかる具体的な事実で訴求する書き方を基本とします。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       共通の進め方（index.html の .strength を流用。ネイビー背景）
+       ============================================ -->
+  <section class="strength" id="process">
+    <div class="container">
+      <p class="section-label">PROCESS</p>
+      <h2 class="section-title">どのサービスも、「コンプラ内蔵フロー」を通ります。</h2>
+      <p class="body-text">マーケティング戦略、インフルエンサー施策、LP制作、ライティング。この4つは、単体でも組み合わせてもご依頼いただけます。案件の内容にかかわらず、戦略担当・ライター・コーダーが作成した成果物は、コンプラ担当による必須チェックというゲートを経てから、社長（YUKI）が最終決裁を行います。コンプラ担当のチェックを通過していない成果物を、私たちは「完成」として扱いません。</p>
+
+      <div class="flow-diagram-wrap">
+        <p class="flow-diagram-label">［コンプラ内蔵フロー］</p>
+        <div class="flow-diagram">
+          <div class="step">社長（YUKI）</div>
+          <div class="arrow">↓</div>
+          <div class="step">PM</div>
+          <div class="arrow">↓</div>
+          <div class="step">戦略担当</div>
+          <div class="arrow">↓</div>
+          <div class="step">ライター／コーダー</div>
+          <div class="arrow">↓</div>
+          <div class="step is-gate">コンプラ担当（必須チェック）</div>
+          <div class="arrow">↓</div>
+          <div class="step is-final">社長（YUKI）が最終決裁</div>
+        </div>
+      </div>
+
+      <div class="flow-steps">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-text">お問い合わせ・ヒアリング</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-text">戦略設計のご提案</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-text">制作（LP／コピー／インフルエンサー施策）</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num is-gate">4</div>
+          <div class="step-text">コンプラ担当による必須チェック</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-text">貴社ご確認・最終納品</div>
+        </div>
+      </div>
+
+      <div class="note-box">
+        <p>※ 案件内容により、一部工程が前後する場合があります。</p>
+        <p>※ 料金・納期は、案件の内容・分量により異なるため、個別にご案内いたします。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       最終CTA（index.html の .cta-final を流用。ネイビー背景）
+       ============================================ -->
+  <section class="cta-final" id="cta">
+    <div class="container">
+      <h2 class="section-title">まずは、貴社の課題をお聞かせください。</h2>
+      <p class="body-text">マーケティング戦略、インフルエンサー施策、LP制作、ライティング──ご相談は、どのサービスからでも承ります。制作前の壁打ちだけでも構いません。現状の課題やコンプラ体制について、お聞かせください。</p>
+      <p class="body-text">制作物の巧拙だけでなく、レピュテーションリスクや社内の確認体制そのものにご不安がある経営層・法務ご担当者様からのご相談も承ります。</p>
+      <a href="contact.html" class="btn-primary">お問い合わせ・ご相談はこちら</a>
+      <div class="note-box">※ まずは現状のマーケティング課題やコンプラ体制についてのご相談から承ります。</div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================
+     フッター（共通パーツ：index.html と同一。リスク・法令関連表示は常時視認可能な位置に配置）
+     ============================================ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-logo">（社名）</div>
+
+    <nav class="footer-nav">
+      <a href="service.html" class="is-current" aria-current="page">サービス</a>
+      <a href="strength.html">強み</a>
+      <a href="flow.html">制作フロー</a>
+      <a href="company.html">会社概要</a>
+      <a href="contact.html">お問い合わせ</a>
+    </nav>
+
+    <p class="footer-notice"><strong>本サイトは制作テスト用のサンプルです。実在の事業・サービスではありません。</strong><br>本サイトは制作中です。掲載内容は今後変更される場合があります。</p>
+
+    <p class="copyright">© （社名） All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  // ハンバーガーメニューの開閉制御（外部ライブラリ不使用の素のJavaScript。index.html と同一処理）
+  (function () {
+    var toggleBtn = document.getElementById('navToggle');
+    var nav = document.getElementById('mainNav');
+
+    toggleBtn.addEventListener('click', function () {
+      var isOpen = nav.classList.toggle('is-open');
+      toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      toggleBtn.setAttribute('aria-label', isOpen ? 'メニューを閉じる' : 'メニューを開く');
+    });
+
+    // ナビ内リンクをクリックしたらメニューを閉じる（モバイル時）
+    nav.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        nav.classList.remove('is-open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

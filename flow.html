@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>制作フロー｜（社名）── 金融特化型マーケティング代理店</title>
+<meta name="description" content="金融事業者様向けのマーケティング制作において、法令・自主規制の観点からのチェックと、品質面のチェックを、それぞれ独立した工程として制作フローの中に組み込んでいます。このページでは、案件を受けてから納品に至るまでの工程を、担当と役割ごとに詳しくご案内します。">
+<style>
+  /* ============================================
+     基本設定：index.html のデザイントークンをそのまま継承
+     （カラーパレット・フォント指定・共通クラスは index.html と同一にする）
+     ============================================ */
+  :root{
+    /* カラー：ネイビー/グレー基調＋抑えたディープブルーの差し色（index.html と同一） */
+    --navy-900:#0f2038;
+    --navy-800:#152c4a;
+    --navy-700:#1c3a5e;
+    --blue-accent:#1f4e8c;
+    --blue-accent-dark:#173c6c;
+    --gray-900:#1c2430;
+    --gray-700:#454f5c;
+    --gray-500:#6b7480;
+    --gray-200:#e3e7ec;
+    --gray-100:#f4f6f8;
+    --white:#ffffff;
+    --note-bg:#eef2f7;
+    --note-border:#8fa3bd;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:-apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic", "Meiryo", sans-serif;
+    color:var(--gray-900);
+    background:var(--white);
+    line-height:1.8;
+    -webkit-text-size-adjust:100%;
+  }
+  img,svg{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{margin:0;padding:0;list-style:none;}
+  h1,h2,h3,p{margin:0;}
+  section{padding:56px 20px;}
+  .container{max-width:1080px;margin:0 auto;}
+
+  /* 見出し共通（index.html と同一） */
+  .section-label{
+    display:inline-block;
+    font-size:0.8rem;
+    letter-spacing:0.12em;
+    color:var(--blue-accent);
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .section-title{
+    font-size:1.5rem;
+    font-weight:700;
+    line-height:1.5;
+    color:var(--navy-900);
+    margin-bottom:20px;
+  }
+  .section-lead{
+    font-size:1rem;
+    color:var(--gray-700);
+    margin-bottom:28px;
+  }
+
+  /* ============================================
+     ヘッダー（index.html／各下層ページと同一デザイン）
+     ============================================ */
+  header.site-header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:var(--white);
+    border-bottom:1px solid var(--gray-200);
+  }
+  .header-inner{
+    max-width:1080px;
+    margin:0 auto;
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo{
+    font-size:1.05rem;
+    font-weight:700;
+    color:var(--navy-900);
+    letter-spacing:0.02em;
+  }
+  .logo .logo-sub{
+    display:block;
+    font-size:0.65rem;
+    font-weight:500;
+    color:var(--gray-500);
+    letter-spacing:0.08em;
+  }
+
+  /* ハンバーガーメニュー（モバイル） */
+  .nav-toggle{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:5px;
+    width:40px;
+    height:40px;
+    background:none;
+    border:1px solid var(--gray-200);
+    border-radius:6px;
+    cursor:pointer;
+  }
+  .nav-toggle span{
+    display:block;
+    width:20px;
+    height:2px;
+    background:var(--navy-900);
+    transition:transform .2s ease, opacity .2s ease;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;}
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  nav.main-nav{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--white);
+    border-bottom:1px solid var(--gray-200);
+    display:none;
+    flex-direction:column;
+    padding:8px 20px 16px;
+  }
+  nav.main-nav.is-open{display:flex;}
+  nav.main-nav a{
+    display:block;
+    padding:12px 4px;
+    font-size:0.95rem;
+    color:var(--gray-900);
+    border-bottom:1px solid var(--gray-100);
+  }
+  nav.main-nav a:last-child{border-bottom:none;}
+  /* 現在ページ（制作フロー）を示す表示 */
+  nav.main-nav a.is-current,
+  footer.site-footer nav.footer-nav a.is-current{
+    color:var(--blue-accent);
+    font-weight:700;
+  }
+  .nav-cta{
+    margin-top:12px;
+  }
+  .nav-cta a{
+    display:block;
+    text-align:center;
+    background:var(--blue-accent);
+    color:var(--white)!important;
+    border-radius:6px;
+    padding:12px !important;
+    font-weight:700;
+  }
+
+  @media (min-width:768px){
+    .nav-toggle{display:none;}
+    nav.main-nav{
+      position:static;
+      display:flex;
+      flex-direction:row;
+      align-items:center;
+      border:none;
+      padding:0;
+      gap:6px;
+      width:auto;
+    }
+    nav.main-nav a{
+      border-bottom:none;
+      padding:8px 12px;
+      font-size:0.9rem;
+      white-space:nowrap;
+    }
+    .nav-cta{margin-top:0;margin-left:8px;}
+    .nav-cta a{padding:9px 16px !important;font-size:0.85rem;white-space:nowrap;}
+  }
+
+  /* ============================================
+     ボタン共通（index.html と同一）
+     ============================================ */
+  .btn-primary{
+    display:inline-block;
+    background:var(--blue-accent);
+    color:var(--white);
+    font-weight:700;
+    font-size:1rem;
+    padding:16px 28px;
+    border-radius:6px;
+    border:none;
+    cursor:pointer;
+    text-align:center;
+  }
+  .btn-primary:hover{background:var(--blue-accent-dark);}
+  .btn-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    color:var(--blue-accent);
+    font-weight:700;
+    font-size:0.95rem;
+    border-bottom:2px solid var(--blue-accent);
+    padding-bottom:2px;
+  }
+
+  /* 打消し表示・注記共通：本文と同等以上の視認性を確保する（index.html と同一） */
+  .note-box{
+    background:var(--note-bg);
+    border-left:4px solid var(--note-border);
+    color:var(--gray-900);
+    font-size:0.95rem;
+    line-height:1.7;
+    padding:14px 16px;
+    border-radius:4px;
+  }
+
+  /* ============================================
+     セクション1：ファーストビュー（index.html の .hero を流用）
+     ============================================ */
+  .hero{
+    background:linear-gradient(180deg, var(--navy-900) 0%, var(--navy-800) 100%);
+    color:var(--white);
+    padding:64px 20px 56px;
+  }
+  .hero .container{text-align:center;}
+  .hero h1{
+    font-size:1.6rem;
+    line-height:1.6;
+    font-weight:700;
+    margin-bottom:20px;
+  }
+  .hero p.sub{
+    font-size:1rem;
+    color:#d3dceb;
+    line-height:1.9;
+    margin-bottom:24px;
+    max-width:640px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .hero .note-box{
+    max-width:560px;
+    margin-left:auto;
+    margin-right:auto;
+    background:rgba(255,255,255,0.08);
+    border-left:4px solid #8fa3bd;
+    color:#e7ecf3;
+    text-align:left;
+  }
+  @media (min-width:768px){
+    .hero h1{font-size:2.1rem;}
+    .hero p.sub{font-size:1.05rem;}
+  }
+
+  /* ============================================
+     セクション2：制作の全工程（PROCESS・白背景）
+     ============================================ */
+  .process{background:var(--white);}
+  .process-steps{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    margin:8px 0 20px;
+  }
+  .process-step{
+    background:var(--gray-100);
+    border-left:4px solid var(--gray-200);
+    border-radius:8px;
+    padding:20px;
+  }
+  .process-step .step-top{
+    margin-bottom:10px;
+  }
+  .process-step h3{
+    display:inline;
+    font-size:1.05rem;
+    font-weight:700;
+    color:var(--navy-900);
+    line-height:1.6;
+  }
+  .process-step .step-badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--navy-900);
+    color:var(--white);
+    font-weight:700;
+    font-size:0.8rem;
+    letter-spacing:0.03em;
+    padding:5px 12px;
+    border-radius:999px;
+    margin-right:2px;
+  }
+  .process-step p.step-desc{
+    font-size:0.95rem;
+    color:var(--gray-700);
+  }
+  /* STEP5：コンプラ担当（必須ゲート）を色分けして強調 */
+  .process-step.is-compliance{
+    background:rgba(31,78,140,0.08);
+    border-left-color:var(--blue-accent);
+  }
+  .process-step.is-compliance .step-badge{background:var(--blue-accent);}
+  .process-step.is-compliance h3{color:var(--blue-accent-dark);}
+  /* STEP6：レビュー担当を、コンプラ担当（青系）とは別トーンで強調 */
+  .process-step.is-review{
+    background:var(--gray-200);
+    border-left-color:var(--navy-700);
+  }
+  .process-step.is-review .step-badge{background:var(--navy-700);}
+  /* 納品：工程の終着点を示す帯（盾マーク等の保証を想起させる装飾は使用しない） */
+  .process-deliver{
+    text-align:center;
+    background:var(--navy-900);
+    color:var(--white);
+    font-weight:700;
+    font-size:0.98rem;
+    border-radius:8px;
+    padding:16px;
+  }
+
+  /* ============================================
+     セクション3：ダブルチェック（DOUBLE CHECK・ネイビー背景）
+     ============================================ */
+  .double-check{background:var(--navy-900);color:var(--white);}
+  .double-check .section-label{color:#8fb0e0;}
+  .double-check .section-title{color:var(--white);}
+  .double-check p.body-text{
+    font-size:1rem;
+    color:#d3dceb;
+    margin-bottom:28px;
+  }
+  .compare-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+  @media (min-width:768px){
+    .compare-grid{grid-template-columns:1fr 1fr;}
+  }
+  .compare-card{
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:10px;
+    padding:24px;
+  }
+  .compare-card h3{
+    font-size:1.1rem;
+    font-weight:700;
+    color:var(--white);
+    margin-bottom:14px;
+  }
+  /* カード冒頭の限定文：注記スタイルだが本文と同等以上の視認性を確保 */
+  .compare-card .note-box{
+    background:rgba(255,255,255,0.1);
+    border-left:4px solid #8fb0e0;
+    color:#e7ecf3;
+  }
+  .compare-card .note-box.note-open{margin-bottom:16px;}
+  .compare-card .note-box.note-close{margin-top:16px;}
+  .compare-card ul{margin-bottom:0;}
+  .compare-card ul li{
+    font-size:0.95rem;
+    color:#e7ecf3;
+    line-height:1.8;
+    padding:8px 0 8px 22px;
+    position:relative;
+  }
+  .compare-card ul li::before{
+    content:"・";
+    position:absolute;
+    left:2px;
+    color:#8fb0e0;
+    font-weight:700;
+  }
+
+  /* ============================================
+     セクション4：構造として組み込む理由（WHY・グレー背景）
+     ============================================ */
+  .why{background:var(--gray-100);}
+  .why p.body-text{
+    font-size:1rem;
+    color:var(--gray-700);
+    margin-bottom:20px;
+  }
+  /* グレー背景の中でも視認できるよう、白背景のリストにする */
+  .why .check-list{
+    background:var(--white);
+    border:1px solid var(--gray-200);
+    border-radius:8px;
+    padding:20px;
+    margin-bottom:20px;
+  }
+  .why .check-list li{
+    font-size:0.98rem;
+    color:var(--gray-900);
+    padding:8px 0 8px 26px;
+    position:relative;
+  }
+  .why .check-list li::before{
+    content:"・";
+    position:absolute;
+    left:2px;
+    color:var(--blue-accent);
+    font-weight:700;
+  }
+  .why p.closing{
+    font-size:1rem;
+    color:var(--gray-900);
+    font-weight:500;
+    margin-bottom:20px;
+  }
+
+  /* ============================================
+     セクション5：貴社から見た流れ（FOR CLIENTS・白背景／index.htmlの.flow-stepsを流用）
+     ============================================ */
+  .client-flow{background:var(--white);}
+  .flow-steps{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+    margin:8px 0 20px;
+  }
+  .flow-steps .step-item{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    background:var(--gray-100);
+    border-radius:8px;
+    padding:16px;
+  }
+  .flow-steps .step-num{
+    flex:0 0 auto;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    background:var(--navy-900);
+    color:var(--white);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:0.95rem;
+  }
+  .flow-steps .step-num.is-gate{background:var(--blue-accent);}
+  .flow-steps .step-text{
+    font-size:0.98rem;
+    color:var(--gray-900);
+    padding-top:5px;
+    font-weight:500;
+  }
+  @media (min-width:768px){
+    .flow-steps{grid-template-columns:repeat(5,1fr);}
+    .flow-steps .step-item{flex-direction:column;text-align:center;align-items:center;}
+  }
+
+  /* ============================================
+     セクション6：最終CTA（index.html の .cta-final を流用）
+     ============================================ */
+  .cta-final{
+    background:linear-gradient(180deg, var(--navy-800) 0%, var(--navy-900) 100%);
+    color:var(--white);
+    text-align:center;
+  }
+  .cta-final .section-title{
+    color:var(--white);
+    font-size:1.3rem;
+  }
+  .cta-final p.body-text{
+    font-size:1rem;
+    color:#d3dceb;
+    margin-bottom:28px;
+  }
+  .cta-final .btn-primary{
+    width:100%;
+    max-width:360px;
+  }
+
+  /* ============================================
+     フッター（共通パーツ：他ページと同一。常時視認可能な表示）
+     ============================================ */
+  footer.site-footer{
+    background:var(--navy-900);
+    color:#c9d2de;
+    padding:36px 20px 24px;
+  }
+  footer.site-footer .footer-logo{
+    color:var(--white);
+    font-weight:700;
+    font-size:1.05rem;
+    margin-bottom:16px;
+  }
+  footer.site-footer nav.footer-nav{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 18px;
+    margin-bottom:20px;
+  }
+  footer.site-footer nav.footer-nav a{
+    font-size:0.88rem;
+    color:#c9d2de;
+  }
+  footer.site-footer .footer-notice{
+    font-size:0.85rem;
+    line-height:1.8;
+    color:#c9d2de;
+    border-top:1px solid rgba(255,255,255,0.15);
+    padding-top:16px;
+    margin-bottom:10px;
+  }
+  footer.site-footer .copyright{
+    font-size:0.8rem;
+    color:#8894a3;
+  }
+
+  @media (min-width:768px){
+    section{padding:80px 20px;}
+    .section-title{font-size:1.9rem;}
+    .container{padding:0 20px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     ヘッダー：index.html／各下層ページと同一デザイン。
+     「制作フロー」は本ページ自身のため現在ページ表示（自己リンク＋強調）とする。
+     ============================================ -->
+<header class="site-header">
+  <div class="header-inner">
+    <a class="logo" href="index.html">（社名）
+      <span class="logo-sub">FINANCIAL MARKETING AGENCY</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="メニューを開く">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="main-nav" id="mainNav">
+      <a href="service.html">サービス</a>
+      <a href="strength.html">強み</a>
+      <a href="flow.html" class="is-current" aria-current="page">制作フロー</a>
+      <a href="company.html">会社概要</a>
+      <a href="contact.html">お問い合わせ</a>
+      <div class="nav-cta"><a href="contact.html">お問い合わせ・ご相談はこちら</a></div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============================================
+       セクション1：ファーストビュー
+       ============================================ -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <h1>コンプラ内蔵フロー｜制作フローのご案内</h1>
+      <p class="sub">金融事業者様向けのマーケティング制作において、法令・自主規制の観点からのチェックと、品質面のチェックを、それぞれ独立した工程として制作フローの中に組み込んでいます。このページでは、案件を受けてから納品に至るまでの工程を、担当と役割ごとに詳しくご案内します。</p>
+      <div class="note-box">※本フローは表現・構成レベルの社内チェック体制で、法令適合を保証するものではありません（詳細は本ページ下部をご覧ください）。</div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       セクション2：制作の全工程（PROCESS）
+       ============================================ -->
+  <section class="process" id="process">
+    <div class="container">
+      <p class="section-label">PROCESS</p>
+      <h2 class="section-title">制作の全工程</h2>
+      <p class="section-lead">トップページ・強みページでご案内している体制図は、本ページの内容を簡略化したものです。ここでは、案件受付から納品までの詳細な工程をご案内します。</p>
+
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-top"><span class="step-badge">STEP 1</span>｜<h3>社長（案件受付）</h3></div>
+          <p class="step-desc">金融事業者様からのご相談・ご依頼内容を、最終決裁者である社長が最初に確認します。案件の性質やリスクの所在を早い段階で把握し、以降の工程設計に反映します。</p>
+        </div>
+        <div class="process-step">
+          <div class="step-top"><span class="step-badge">STEP 2</span>｜<h3>PM（プロジェクトマネージャー）</h3></div>
+          <p class="step-desc">案件内容を整理し、戦略・ライター・コーダーなど各担当への割り振りを行います。担当間の連携漏れやチェック工程の抜けが生じないよう、進行全体を管理します。</p>
+        </div>
+        <div class="process-step">
+          <div class="step-top"><span class="step-badge">STEP 3</span>｜<h3>戦略担当</h3></div>
+          <p class="step-desc">ターゲット設計と訴求方針を立案します。誰に・何を・どのように伝えるかの方針を、この段階で固めます。</p>
+        </div>
+        <div class="process-step">
+          <div class="step-top"><span class="step-badge">STEP 4</span>｜<h3>ライター／コーダー（制作）</h3></div>
+          <p class="step-desc">戦略担当が設計した方針に基づき、そこからの逸脱がないよう、LP構成・コピー・SNSやインフルエンサー向け投稿文、実装などの制作物を仕上げます。</p>
+        </div>
+        <div class="process-step is-compliance">
+          <div class="step-top"><span class="step-badge">STEP 5</span>｜<h3>コンプラ担当（表現・構成の社内チェック｜必須ゲート）</h3></div>
+          <p class="step-desc">景品表示法・金融商品取引法・FFAJ自主規制ガイドラインなどの観点から、表現・構成レベルでの社内チェックを行います。コンプラ担当のチェックを経ていない成果物は、「完成」として扱いません。</p>
+        </div>
+        <div class="process-step is-review">
+          <div class="step-top"><span class="step-badge">STEP 6</span>｜<h3>レビュー担当（品質チェック）</h3></div>
+          <p class="step-desc">コンプラ担当のチェックを経た内容が、訴求力や構成のわかりやすさとして成立しているかを確認します。表現の修正によって伝えたいことがぼやけていないかも、この段階で見ます。基準を満たさない場合は、差し戻しを行います。</p>
+        </div>
+        <div class="process-step">
+          <div class="step-top"><span class="step-badge">STEP 7</span>｜<h3>社長（最終決裁）</h3></div>
+          <p class="step-desc">コンプラ担当・レビュー担当のチェックを経た成果物を、最終決裁者である社長が確認し、決裁します。</p>
+        </div>
+      </div>
+
+      <div class="process-deliver">→ 納品：決裁後、貴社へ成果物を納品します。</div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       セクション3：ダブルチェック（DOUBLE CHECK）
+       ============================================ -->
+  <section class="double-check" id="double-check">
+    <div class="container">
+      <p class="section-label">DOUBLE CHECK</p>
+      <h2 class="section-title">「法令上問題ないか」と「成果として機能するか」は、別の基準です</h2>
+      <p class="body-text">法令・自主規制の観点で問題がないかを見るチェックと、訴求力・完成度の観点で成果として機能するかを見るチェックは、評価の軸が異なります。どちらか一方だけでは、もう一方は担保できません。</p>
+
+      <div class="compare-grid">
+        <!-- カードA：コンプラ担当によるチェック -->
+        <div class="compare-card">
+          <h3>コンプラ担当によるチェック（表現面の必須ゲート）</h3>
+          <div class="note-box note-open">※以下は法的評価ではなく、表現・構成上の確認観点です。</div>
+          <ul>
+            <li>確認する主な観点：景品表示法上の優良誤認・有利誤認のおそれがないか／金融商品取引法・FFAJ自主規制ガイドラインに照らして問題となりうる表現がないか／断定的な利益予測や元本保証を想起させる表現が含まれていないか、など</li>
+            <li>コンプラ担当のチェックを経ていない成果物は、「完成」として扱いません。</li>
+            <li>基準に満たない場合は、ライター・コーダーへ差し戻し、修正を行います。</li>
+          </ul>
+          <div class="note-box note-close">※このチェックは表現・構成レベルでの社内確認であり、法律専門家による法的判断そのものを提供するものではありません。最終的な法令適合の判断は、各事業者様の法務・コンプライアンス部門にてご確認いただくことを前提としています。</div>
+        </div>
+
+        <!-- カードB：レビュー担当によるチェック -->
+        <div class="compare-card">
+          <h3>レビュー担当によるチェック（品質の関門）</h3>
+          <ul>
+            <li>確認する主な観点：ターゲットに対して訴求力があるか／構成にわかりにくい部分がないか／コンプラ担当のチェック後の修正によって、訴求全体の一貫性が崩れていないか、など</li>
+            <li>属人的な「気をつける」ではなく、レビューを必須工程として制作フローに組み込んでいます。</li>
+            <li>基準に満たない場合は差し戻しを行います。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       セクション4：構造として組み込む理由（WHY）
+       ============================================ -->
+  <section class="why" id="why">
+    <div class="container">
+      <p class="section-label">WHY</p>
+      <h2 class="section-title">構造として、チェックを組み込む理由</h2>
+      <p class="body-text">金融事業者様向けのマーケティングでは、法令・自主規制への配慮そのものがサービス品質に直結すると考えています。そのため、以下のような構造を制作フローに組み込んでいます。</p>
+      <ul class="check-list">
+        <li>戦略設計の段階から、法令・品質の観点を前提とした制作を進める構造にしています。</li>
+        <li>コンプラ担当のチェックを経ない限り、成果物を「完成」として扱わない仕組みにしています。</li>
+        <li>法令チェックと品質チェックを、目的の異なる別工程として二重に設けています。</li>
+        <li>すべての成果物は、最終的に社長による決裁を経てから貴社へお渡しします。</li>
+      </ul>
+      <p class="closing">これらは、属人的な「気をつける」という運用ではなく、チェックを工程として組み込むことで、表現上のリスクや品質のばらつきが生じにくい体制を目指す取り組みです。</p>
+      <div class="note-box">※本フローは表現・構成レベルでの社内チェック体制であり、法令適合を保証するものではありません。最終的な法令適合の判断は、各事業者様の法務・コンプライアンス部門にてご確認いただくことを前提としています。</div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       セクション5：貴社から見た流れ（FOR CLIENTS）
+       ============================================ -->
+  <section class="client-flow" id="client-flow">
+    <div class="container">
+      <p class="section-label">FOR CLIENTS</p>
+      <h2 class="section-title">貴社から見た流れ</h2>
+      <p class="section-lead">上記は社内の詳細な制作工程です。貴社とのやり取りという観点では、以下の5ステップとして進行します。</p>
+
+      <div class="flow-steps">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-text">お問い合わせ・ヒアリング</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-text">戦略設計のご提案</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-text">制作（LP／コピー／インフルエンサー施策）</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num is-gate">4</div>
+          <div class="step-text">コンプラ担当による必須チェック</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-text">貴社ご確認・最終納品</div>
+        </div>
+      </div>
+      <div class="note-box">※ 案件内容により、一部工程が前後する場合があります。</div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       セクション6：最終CTA
+       ============================================ -->
+  <section class="cta-final" id="cta">
+    <div class="container">
+      <h2 class="section-title">制作フローについてのご相談</h2>
+      <p class="body-text">二重チェックの運用（各担当の独立性の保ち方、差し戻しが発生した際の進行など）について、個別にご説明することも可能です。体制について伺いたいだけでも、お気軽にお問い合わせください。</p>
+      <a href="contact.html" class="btn-primary">お問い合わせはこちら</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================
+     フッター（共通パーツ：他ページと同一。リスク・法令関連表示は常時視認可能な位置に配置）
+     ============================================ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-logo">（社名）</div>
+
+    <nav class="footer-nav">
+      <a href="service.html">サービス</a>
+      <a href="strength.html">強み</a>
+      <a href="flow.html" class="is-current" aria-current="page">制作フロー</a>
+      <a href="company.html">会社概要</a>
+      <a href="contact.html">お問い合わせ</a>
+    </nav>
+
+    <p class="footer-notice"><strong>本サイトは制作テスト用のサンプルです。実在の事業・サービスではありません。</strong><br>本サイトは制作中です。掲載内容は今後変更される場合があります。</p>
+
+    <p class="copyright">© （社名） All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  // ハンバーガーメニューの開閉制御（外部ライブラリ不使用の素のJavaScript。index.html と同一処理）
+  (function () {
+    var toggleBtn = document.getElementById('navToggle');
+    var nav = document.getElementById('mainNav');
+
+    toggleBtn.addEventListener('click', function () {
+      var isOpen = nav.classList.toggle('is-open');
+      toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      toggleBtn.setAttribute('aria-label', isOpen ? 'メニューを閉じる' : 'メニューを開く');
+    });
+
+    // ナビ内リンクをクリックしたらメニューを閉じる（モバイル時）
+    nav.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        nav.classList.remove('is-open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
